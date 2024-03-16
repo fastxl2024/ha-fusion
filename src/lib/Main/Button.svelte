@@ -178,6 +178,12 @@
 			});
 		} else if (more_info === false) {
 			toggle();
+		} else if ((sel?.entity_id) === 'sensor.solaredge_modbus') {
+			openModal(() => import('$lib/Popups/Solar.svelte'), {sel: sel});
+		} else if ((sel?.entity_id) === 'media_player.plex_zolderkamer') {
+			openModal(() => import('$lib/Popups/Plex.svelte'), {sel: sel});
+//		} else if ((sel?.entity_id) === 'media_player.plex_zolderkamer') {
+//			openModal(() => import('$lib/Popups/Solar.svelte'), {sel: sel});			
 		} else {
 			switch (getDomain(sel?.entity_id)) {
 				// light
@@ -205,7 +211,7 @@
 				case 'event':
 				case 'image_processing':
 				case 'mailbox':
-				case 'sensor':
+				case 'sensor':					
 				case 'binary_sensor':
 				case 'stt':
 				case 'weather':
@@ -339,6 +345,7 @@
 			}
 		}
 	}
+	
 
 	/**
 	 * Preloads module before click event

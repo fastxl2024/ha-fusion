@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { states, editMode, motion, selectedLanguage, lang } from '$lib/Stores';
 	import type { HassEntity } from 'home-assistant-js-websocket';
-	import { isTimestamp, relativeTime } from '$lib/Utils';
-	import { openModal, closeModal } from 'svelte-modals';
+	import { openModal } from 'svelte-modals';
 	import Icon from '@iconify/svelte';
-	import { codePointAt } from '@codemirror/state';
+	export let isOpen: boolean;
+	export let sel: any;
+
 
 	export let entity_id: string | undefined = undefined;
 	export let entity_id_2: string | undefined = undefined;
@@ -67,7 +68,6 @@
 		battery_level_sensor_icon_2 = $states?.[battery_level_sensor_2]?.attributes.icon;
 	}	
 
-
 </script>
 
 <div 
@@ -94,8 +94,8 @@
 				{$lang('unknown')}
 			{/if}    
 		</div>
-	 	<div class="Image">
-			<img src={entity?.attributes.entity_picture} alt="entity_picture" style="box-shadow: 0 0 20px {status_color}">				
+	 	<div class="Image" >
+			<img src={entity?.attributes.entity_picture} alt="entity_picture" style="box-shadow: 0 0 20px {status_color}">		
 	 	</div>
 		
 		<div class="Battery">  

@@ -83,6 +83,9 @@ dependencies:
   svelte-ripple:
     specifier: ^0.1.1
     version: 0.1.1
+  svelte-swipe:
+    specifier: ^2.0.4
+    version: 2.0.4(svelte@4.2.11)
   svelte-tiny-virtual-list:
     specifier: ^2.0.5
     version: 2.0.5
@@ -3289,6 +3292,14 @@ packages:
 
   /svelte-ripple@0.1.1:
     resolution: {integrity: sha512-MW/TBYus/2k9ccTTx2LvSv+wbmGN+CYLgiCMPa5fK7DXlUUmIuGKFBtN+90rECpSOOR+W7Uhm2qJemLptS6ahw==}
+    dev: false
+
+  /svelte-swipe@2.0.4(svelte@4.2.11):
+    resolution: {integrity: sha512-BkfQ0GR/sZcNn9iqJwxvzGzVXUGAHSR/SXLvyPuGzeyozu1+MlAVLfwgOSqU6bxNk+aHQevbTalFncHwxNikTw==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0
+    dependencies:
+      svelte: 4.2.11
     dev: false
 
   /svelte-tiny-virtual-list@2.0.5:

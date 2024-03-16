@@ -17,7 +17,12 @@
 	$: brightness = attributes?.brightness;
 	$: percentage = attributes?.percentage;
 	$: media_title = attributes?.media_title;
-	$: media_artist = attributes?.media_artist;	
+	$: media_artist = attributes?.media_artist;
+	$: media_content_type = attributes?.media_content_type;
+	$: media_season = attributes?.media_season;
+	$: media_episode = attributes?.media_episode;
+	$: media_series_title = attributes?.media_series_title;
+
 </script>
 
 <!-- Light -->
@@ -29,7 +34,7 @@
 	{@const floor = percentage < 0.01 && percentage > 0 ? 0.01 : percentage}
 	{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(floor)}
 
-	<!-- Media -->
+	<!-- Media
 {:else if state === 'playing' && attributes?.media_content_id.includes(':8096/')}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}
 	{#if selected?.marquee === true && contentWidth && contentWidth > 153 && !$editMode}
@@ -42,7 +47,7 @@
 		{/await}
 	{:else}
 		{@html 'Music Assistant'}
-	{/if}
+	{/if}-->
 	
 {:else if media_artist && media_title && state === 'playing'}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}
@@ -59,6 +64,27 @@
 	{:else}
 		{@html artist + ' - ' + title }
 	{/if}
+
+{:else if media_content_type === 'tvshow' && media_season && media_episode && state === 'playing'}
+	{@const title = `<span title=${media_title}>${media_title}</span>`}
+	{@const season = `<span title=${media_season}>${media_season}</span>`}
+	{@const episode = `<span title=${media_episode}>${media_episode}</span>`}
+	{@const serie = `<span title=${media_series_title}>${media_series_title}</span>`}
+
+
+	{#if selected?.marquee === true && contentWidth && contentWidth > 153 && !$editMode}
+		{#await import('$lib/Components/Marquee.svelte')}
+			{@html title}
+		{:then Marquee}
+			<svelte:component this={Marquee.default}>
+				{@html serie + ' - ' + 'S'+ season + 'E' + episode + ' - ' + title }
+				{@html '&nbsp;'.repeat(4)}
+			</svelte:component>
+		{/await}
+	{:else}
+		{@html serie + ' - ' + 'S'+ season + 'E' + episode + ' - ' + title }
+	{/if}
+
 
 {:else if media_title && state === 'playing'}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}

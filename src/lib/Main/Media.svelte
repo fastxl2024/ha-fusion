@@ -3,6 +3,7 @@
 	import Icon from '@iconify/svelte';
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
 	import { getName } from '$lib/Utils';
+	import { getGraphEntity } from '$lib/Modal/getRandomEntity';
 
 	export let sel: any;
 
@@ -80,7 +81,9 @@
 		backgroundImage = 'none';
 	}
 </script>
-
+{#if name === undefined}
+  
+{:else}
 <div
 	class="media-container"
 	style:background-image={backgroundImage}
@@ -131,6 +134,9 @@
 			{:else}
 				{@const media_artist = entity?.attributes?.media_artist}
 				{@const media_title = entity?.attributes?.media_title}
+				{@const media_content_type = entity?.attributes?.media_content_type}
+				{@const season = entity?.attributes?.media_season} 
+				{@const episode = entity?.attributes?.media_episode}
 
 				<div class="name">
 					{name || $lang('unknown')}
@@ -138,7 +144,9 @@
 
 				<div class="state">
 					<div style="overflow: hidden; text-overflow: ellipsis;">
-						{#if media_artist && media_title}
+						{#if media_content_type === 'tvshow'}
+							{entity?.attributes?.media_series_title} - S{season}E{episode} - {media_title}
+						{:else if media_artist && media_title}
 							<!-- ARTIST - TITLE -->
 
 							{media_artist} - {media_title}
@@ -159,7 +167,7 @@
 		</div>
 	</div>
 </div>
-
+{/if}
 <style>
 	.youtube-icon {
 		width: 20%;

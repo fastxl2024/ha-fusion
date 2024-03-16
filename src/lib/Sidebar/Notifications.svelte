@@ -73,7 +73,6 @@
 		{$lang(empty ? 'notifications_empty' : 'notifications')}
 	</div>
 {/if}
-
 {#if $persistentNotifications}
 	<div
 		class="container"
@@ -127,7 +126,7 @@
 							}
 						</style>
 					</div>
-				</div>
+				</div>							
 			{/each}
 		</div>
 	</div>

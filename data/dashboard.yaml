@@ -1,298 +1,673 @@
-theme: godis
-hide_views: false
-hide_sidebar: false
-sidebarWidth: 391
 views:
-  - name: Hemma
-    id: 6467602449648
+  - name: Home
+    id: 7627984067126
     sections:
       - type: horizontal-stack
-        id: 5078078976670
         sections:
-          - name: Test
-            id: 2171067078835
+          - name: Home
             items:
+              - id: 2789336499217
+                type: button
+                entity_id: sensor.solaredge_modbus
               - type: button
-                entity_id: light.studio_dator
-                id: 5008685947164
+                id: 3424569424984
+                entity_id: binary_sensor.voordeur_deur
+                name: Deuren
+                template:
+                  set_state: >-
+                    {% if is_state(entity_id, "off") or
+                    is_state('binary_sensor.nest_protect_office_co_status',
+                    "on")%} 
+                      
+                    {% else %}
+                      
+                    {% endif %}
+                  state: >-
+                    {% if is_state(entity_id, 'on') and
+                    is_state('binary_sensor.achterdeur_deur', 'on')%}
+                      Deuren open
+                    {% elif is_state(entity_id, 'on') and
+                    is_state('binary_sensor.achterdeur_deur', 'off')%}
+                      Voordeur open
+                    {% elif is_state(entity_id, 'off') and
+                    is_state('binary_sensor.achterdeur_deur', 'on')%}
+                      Achterdeur open
+                    {% else %}
+                      Gesloten
+                    {% endif %}
               - type: button
-                entity_id: light.vardagsrum
-                id: 6094154428386
-                name: Belysning
+                id: 3133618352202
+                entity_id: sensor.cv_ketel_stroom
+                name: CV Ketel
+                template:
+                  icon: |-
+                    {% if states(entity_id) | float(0) > 10  %}
+                      material-symbols:mode-heat
+                    {% else %}
+                      material-symbols:mode-heat-off
+                    {% endif %}
+                  state: >-
+                    {{ states(entity_id, with_unit=True) }} - {{
+                    states('sensor.dsmr_day_consumption_gas', with_unit=True) }}
               - type: button
-                entity_id: light.vardagsrum_horna
-                color: '#1cd760'
-                marquee: true
-                id: 4795962599238
-                name: Hörnlampa
+                id: 3350009560432
+                entity_id: sensor.solar_production_daily
+                name: Vandaag opgewekt
+                icon: material-symbols:solar-power-outline
               - type: button
-                entity_id: media_player.sony_bravia_tv
-                id: 7351468287678
-              - type: button
-                id: 3728122340522
-                entity_id: switch.deltaco_sh_p01_socket
-          - name: Studio
-            id: 9828119797472
+                id: 1325420133823
+                entity_id: sensor.dsmr_day_consumption_electricity_merged
+                name: Verbruik vandaag
+              - id: 5190958332346
+                type: button
+                entity_id: binary_sensor.rookmelder_bijkeuken_rook
+                name: Rookmelders
+                template:
+                  color: >-
+                    {% if
+                    is_state('binary_sensor.nest_protect_office_smoke_status',
+                    "on") or
+                    is_state('binary_sensor.nest_protect_office_co_status',
+                    "on") or is_state('binary_sensor.rookmelder_bijkeuken_rook',
+                    "on") or is_state('binary_sensor.rookmelder_boven_rook',
+                    "on") or is_state('binary_sensor.rookmelder_meterkast_rook',
+                    "on") or is_state('binary_sensor.rookmelder_woonkamer_rook',
+                    "on")%} 
+                      red
+                    {% else %}
+                      green
+                    {% endif %}
+                  set_state: >-
+                    {% if
+                    is_state('binary_sensor.nest_protect_office_smoke_status',
+                    "on") or
+                    is_state('binary_sensor.nest_protect_office_co_status',
+                    "on") or is_state('binary_sensor.rookmelder_bijkeuken_rook',
+                    "on") or is_state('binary_sensor.rookmelder_boven_rook',
+                    "on") or is_state('binary_sensor.rookmelder_meterkast_rook',
+                    "on") or is_state('binary_sensor.rookmelder_woonkamer_rook',
+                    "on")%} 
+                      Gevaar
+                    {% else %}
+                      Veilig
+                    {% endif %}
+                more_info: false
+            id: 4931844050329
+            sections: []
+          - name: ''
             items:
-              - type: button
-                entity_id: light.studio_group
-                id: 3316142550855
-              - type: button
-                entity_id: switch.imac
-                id: 3575493192177
-              - type: button
-                entity_id: switch.gosund_monitors_switch
-                id: 8082348418851
-                icon: material-symbols:speaker
+              - type: camera
+                id: 4008746747412
+                entity_id: camera.reolink_video_doorbell_poe_fluent
+                width: 2560
+                height: 1920
+                stream: true
+            id: 5884388390897
+            sections: []
+        id: 1475060540192
+        items: []
       - type: horizontal-stack
-        id: 4240433563768
         sections:
-          - name: Media
-            id: 7859955675791
+          - name: Verlichting
+            items:
+              - type: button
+                id: 5788994051290
+                entity_id: light.bijkeuken
+              - type: button
+                id: 5020246559532
+                entity_id: light.keukenlamp
+                name: Keukenlamp
+              - type: button
+                id: 3704380067851
+                entity_id: light.eettafel
+              - type: button
+                id: 7256307608775
+                entity_id: light.dressoir
+              - type: button
+                id: 7886060572355
+                entity_id: light.keukenspotjes
+                name: Spotjes
+              - type: button
+                id: 5285469973327
+                entity_id: switch.schakelaar_buitenverlichting
+                more_info: false
+                name: Buitenverlichting
+                icon: mdi:lightbulb
+            id: 4176678091681
+            sections: []
+          - name: Entertainment
+            items:
+              - type: button
+                id: 7521058043538
+                entity_id: media_player.tv_woonkamer
+                name: TV
+              - type: button
+                id: 5560832173615
+                entity_id: media_player.sonos_woonkamer
+                marquee: true
+              - type: button
+                id: 3097807484896
+                entity_id: media_player.coreelec
+                marquee: true
+              - type: button
+                id: 1260968691286
+                entity_id: media_player.mass_woonkamer
+                marquee: true
+            id: 9880656306437
+            sections: []
+        id: 2766450866307
+        items: []
+      - type: horizontal-stack
+        sections:
+          - name: Verwarming
+            items:
+              - type: button
+                id: 5370886679205
+                entity_id: climate.01_087939
+                name: Verwarming
+              - type: button
+                id: 2333864271044
+                entity_id: climate.airco_woonkamer
+                name: Airco
+            id: 6302549992373
+            sections: []
+        id: 6650700841457
+        items: []
+    icon: flat-color-icons:home
+  - name: Beneden
+    id: 7397780006416
+    sections:
+      - type: horizontal-stack
+        sections:
+          - name: Verlichting
+            items:
+              - type: button
+                id: 6733818320567
+                entity_id: light.eettafel
+                more_info: false
+              - type: button
+                id: 1951005694289
+                entity_id: light.dressoir
+                more_info: false
+              - type: button
+                id: 5689132678621
+                entity_id: light.keukenlamp
+                name: Keukenlamp
+                more_info: false
+              - type: button
+                id: 7427157803497
+                entity_id: light.keukenspotjes
+                more_info: false
+              - type: button
+                id: 9578993527174
+                entity_id: light.bijkeuken
+              - type: button
+                id: 3727308326010
+                entity_id: light.lamp_toilet
+                name: Toilet
+            id: 5908256129565
+            sections: []
+          - name: Rolluiken
+            items:
+              - type: button
+                id: 1610672134004
+                entity_id: cover.rolluik
+              - type: button
+                id: 2985916959230
+                entity_id: cover.screen
+              - type: button
+                id: 8902964862847
+                entity_id: cover.gordijnen
+            id: 4526349504733
+            sections: []
+        id: 8507184355964
+        items: []
+      - type: horizontal-stack
+        sections:
+          - name: Verwarming
+            items:
+              - type: button
+                id: 2309051995150
+                entity_id: climate.01_087939_00
+                name: Verwarming
+              - type: button
+                id: 2042197139103
+                entity_id: climate.airco_woonkamer
+                name: Airco
+            id: 7258073665670
+            sections: []
+          - name: Overig
+            items:
+              - type: button
+                id: 6734049653072
+                entity_id: vacuum.roborock_q7_max
+              - type: button
+                id: 4848835031912
+                entity_id: switch.rituals
+              - type: button
+                id: 8368473107985
+                entity_id: sensor.vaatwasser_stroom
+                template:
+                  state: |-
+                    {% if states('sensor.vaatwasser_stroom') | float > 5 -%}
+                     Aan - {{states('sensor.vaatwasser_stroom', with_unit=True)}} 
+                    {%- else -%}
+                     Uit
+                    {%- endif -%} 
+                icon: fluent:dishwasher-32-filled
+                name: Vaatwasser
+              - type: button
+                id: 5798008456410
+                entity_id: sensor.quooker_stroom
+                template:
+                  state: |-
+                    {% if states('sensor.quooker_stroom') | float > 5 -%}
+                     Opwarmen - {{states('sensor.quooker_stroom', with_unit=True)}} 
+                    {%- else -%}
+                     Uit
+                    {%- endif -%} 
+                  color: |-
+                    {% if states('sensor.quooker_stroom') | float > 5 -%}
+                      darkred 
+                    {%- else -%}
+                       
+                    {%- endif -%} 
+                  icon: fa6-solid:faucet-drip
+                name: Quooker
+              - id: 5555453503166
+                type: button
+                entity_id: sensor.wasmachine_stroom
+                name: Wasmachine
+                template:
+                  state: |-
+                    {% if states('sensor.wasmachine_stroom') | float > 5 -%}
+                     Wassen - {{states('sensor.wasmachine_stroom', with_unit=True)}} 
+                    {%- else -%}
+                     Uit
+                    {%- endif -%} 
+                  icon: |-
+                    {% if states('sensor.wasmachine_stroom') | float > 5 -%}
+                      mdi:washer
+                    {%- else -%}
+                       mdi:washer-off
+                    {%- endif -%} 
+                more_info: false
+              - id: 2389316581823
+                type: button
+                entity_id: sensor.circulus_gft
+                name: Wasdroger
+                template:
+                  state: |-
+                    {% if states('sensor.wasdroger_stroom') | float > 5 -%}
+                     Aan - {{states('sensor.wasdroger_stroom', with_unit=True)}} 
+                    {%- else -%}
+                     Uit
+                    {%- endif -%}
+                  background: red
+                  icon: |-
+                    {% if states('sensor.wasdroger_stroom') | float > 5 -%}
+                      mdi:tumble-dryer
+                    {%- else -%}
+                      mdi:tumble-dryer-off
+                    {%- endif -%} 
+                more_info: false
+            id: 2112371945518
+        id: 7143594729093
+        items: []
+      - type: horizontal-stack
+        sections:
+          - name: Entertainment
+            items:
+              - type: button
+                id: 2014333988460
+                entity_id: media_player.tv_woonkamer
+                marquee: true
+                name: TV
+              - type: button
+                id: 2824275586095
+                entity_id: media_player.coreelec
+                marquee: true
+              - type: button
+                id: 8862914118626
+                entity_id: media_player.sonos_woonkamer
+                marquee: true
+              - id: 4193383206966
+                type: button
+                entity_id: media_player.plex_woonkamer
+                name: Plex
+                marquee: true
+                icon: cbi:plex
+              - id: 9008800144520
+                type: button
+                entity_id: media_player.mass_woonkamer
+                name: Mass
+            id: 9004474698978
+            sections: []
+          - name: ''
             items:
               - type: media
-                id: 5276106620601
                 conditional:
-                  - entity_id: sensor.plex_recently_added
-                    name: Senast tillagt
+                  - entity_id: media_player.plex_woonkamer
+                    name: Plex
                     icon: mdi:plex
                     color: orange
-                  - entity_id: media_player.vardagsrum
-                  - entity_id: media_player.sovrum
-                  - entity_id: media_player.spotify
-                    icon: mdi:spotify
-                  - entity_id: media_player.kok
-          - name: Övrigt
+                  - entity_id: media_player.coreelec
+                    name: Kodi
+                    icon: mdi:plex
+                    color: orange
+                  - entity_id: media_player.sonos_woonkamer
+                    icon: cib:sonos
+                id: 8087085925448
+            sections: []
+            id: 6204589631296
+        id: 2430215298103
+        items: []
+    icon: emojione:couch-and-lamp
+  - name: Boven
+    id: 2513855701464
+    sections:
+      - type: horizontal-stack
+        sections:
+          - name: Badkamer
             items:
               - type: button
-                id: 4326750373921
-                entity_id: light.badrum_group
+                id: 2520733356342
+                entity_id: climate.01_087939_02
+                name: Verwarming
               - type: button
-                id: 6654837792944
-                entity_id: switch.gosund_fan_switch
-                icon: mdi:fan
+                id: 3830501641858
+                entity_id: light.lamp_badkamer
+                name: Lamp
               - type: button
-                id: 9182560073626
-                entity_id: light.garderob_lampa
-                name: Garderob
-                icon: material-symbols:door-front-sharp
+                id: 6053455420452
+                entity_id: light.spotje_badkamer
+                icon: mdi:track-light
+                name: Spotje
               - type: button
-                id: 6583508288448
-                entity_id: light.hall_group
-                name: Hall
+                id: 6465024919507
+                entity_id: fan.mechanical_ventilation
+                name: Afzuiging
+            id: 4678980917971
+            sections: []
+          - name: Slaapkamer
+            items:
               - type: button
-                entity_id: light.sovrum_group
-                id: 4536918822520
+                id: 6662812327542
+                entity_id: climate.01_087939_03
+                name: Verwarming
               - type: button
-                entity_id: climate.ac
+                id: 3855980877089
+                entity_id: light.lamp_slaapkamer
+                name: Lamp
+              - type: button
+                id: 3816069776826
+                entity_id: media_player.chromecast_slaapkamer
+                name: Google TV
                 marquee: true
-                id: 2763550457343
-                name: Klimat
+            id: 6251850360151
+            sections: []
+        id: 4104978296027
+        items: []
+      - type: horizontal-stack
+        sections:
+          - name: Slaapkamer Evi
+            items:
               - type: button
-                entity_id: switch.ps5_635_power
-                color: '#1cd760'
-                marquee: true
-                id: 8427787269294
-                name: Playstation
+                id: 8975532940100
+                entity_id: climate.01_087939_04
+                name: Verwarming
               - type: button
-                entity_id: media_player.samsung
-                id: 1503994513807
-            id: 7274165372538
-      - name: Hemma
-        items:
-          - type: button
-            id: 5560216674913
-            entity_id: person.matte
-            icon: fluent-emoji-flat:alien
-          - type: button
-            id: 8128083996424
-            entity_id: person.sanja
-          - type: button
-            id: 3574383219011
-            entity_id: script.home_leave
-            icon: fluent:hand-wave-20-filled
-          - type: button
-            id: 3827902926530
-            entity_id: script.home_arrive
-            icon: material-symbols:home-rounded
-        id: 1412018494330
-  - name: Entities
-    icon: material-symbols:filter-list-rounded
-    id: 5813909951190
+                id: 8602667084118
+                entity_id: light.lamp_slaapkamer_evi
+                name: Lamp
+            id: 1766992310119
+            sections: []
+          - name: Slaapkamer Nova
+            items:
+              - type: button
+                id: 9496597008047
+                entity_id: climate.01_087939_05
+                name: Verwarming
+              - type: button
+                id: 7457649180413
+                entity_id: light.wled_slaapkamer_nova
+                name: Ledstrip
+            id: 9683373546372
+            sections: []
+        id: 1113597884223
+        items: []
+      - type: horizontal-stack
+        sections:
+          - name: Kastenkamer
+            items:
+              - type: button
+                id: 2343781557343
+                entity_id: climate.01_087939_06
+                name: Verwarming
+              - type: button
+                id: 6720397123832
+                entity_id: light.lamp_kastenkamer
+                name: Lamp
+            id: 6091508436924
+            sections: []
+          - name: Zolder
+            items:
+              - type: button
+                id: 7940461697945
+                entity_id: light.zolder_voorruimte
+                name: Lamp
+            id: 2043698998800
+            sections: []
+        id: 8713694617578
+        items: []
+    icon: fluent-emoji-flat:person-in-bed
+  - name: Zolderkamer
+    id: 6449202286142
     sections:
-      - name: Test
-        items:
-          - type: button
-            id: 3188058166584
-            entity_id: timer.test
-            name: Timer
-          - type: button
-            id: 4014538054364
-            entity_id: update.hacs_update
-            name: Update
-          - type: button
-            id: 1542804203536
-            entity_id: vacuum.morty
-            name: Vacuum
-          - type: button
-            id: 6145994572695
-            entity_id: weather.smhi_home
-            name: Weather
-          - type: button
-            id: 1443718504784
-            entity_id: zone.home
-            name: Zone
-          - type: button
-            id: 8859082285036
-            entity_id: sun.sun
-          - type: button
-            id: 3600633343715
-            entity_id: switch.galaxy_tab_a_screensaver
-            name: Switch
-          - type: button
-            id: 8233675559365
-            entity_id: sensor.badrum_motion_battery
-            name: Sensor
-          - type: button
-            id: 7404639096964
-            entity_id: select.conditional_media
-            name: Select
-          - type: button
-            id: 8625756439435
-            entity_id: script.home_arrive
-            name: Script
-          - type: button
-            id: 5713628080695
-            entity_id: scene.home_below_horizon
-            name: Scene
-          - type: button
-            id: 4572210401136
-            entity_id: remote.vardagsrum
-            name: Remote
-          - type: button
-            id: 4275494337776
-            entity_id: person.matte
-            name: Person
-          - type: button
-            id: 6609447826960
-            entity_id: number.galaxy_tab_a_screensaver_brightness
-            name: Number
-          - type: button
-            id: 8822164265367
-            entity_id: media_player.tablet
-            name: Media player
-          - type: button
-            id: 6295149030308
-            entity_id: light.studio_dator
-            name: Light
-          - type: button
-            id: 9445324699683
-            entity_id: input_number.monitors_volume
-            name: Input number
-          - type: button
-            id: 2832875690525
-            entity_id: input_datetime.sleep_notify_torrent
-            name: Input Datetime
-          - type: button
-            id: 5329753290519
-            entity_id: input_boolean.imac_lock
-            name: Input boolean
-          - type: button
-            id: 8154800117105
-            entity_id: event.badrum_dimmer_button_1
-            name: Event
-          - type: button
-            id: 6399086292020
-            entity_id: image.template_image
-            name: Image
-          - type: button
-            id: 8970334871265
-            entity_id: device_tracker.iphone
-            name: Device tracker
-          - type: button
-            id: 5981318553491
-            entity_id: climate.ac
-            name: Climate
-          - type: button
-            name: Automation
-            id: 1477424416058
-            entity_id: automation.backup_ha_monthly
-          - type: button
-            name: Binary sensor
-            id: 1045768288013
-            entity_id: binary_sensor.galaxy_tab_a_device_admin
-          - type: button
-            id: 7826433574180
-            entity_id: button.galaxy_tab_a_load_start_url
-            name: Button
-          - type: button
-            name: Calendar
-            id: 8928742612730
-            entity_id: calendar.home_assistant_devs
-          - type: button
-            name: Camera
-            id: 4466621036589
-            entity_id: camera.ipcam
-        id: 3178723045273
+      - type: horizontal-stack
+        sections:
+          - name: Entertainment
+            items:
+              - id: 8210402849612
+                type: button
+                entity_id: media_player.plex_zolderkamer
+                name: Plex
+                icon: cbi:plex
+                marquee: true
+                template:
+                  service: |-
+                    service: media_player.media_play_pause
+                    data: {
+                      entity_id: media_player.zolderkamer_google_tv
+                        }
+              - type: button
+                id: 2513478060366
+                entity_id: media_player.zolderkamer_google_tv_2
+                name: Google TV
+                marquee: true
+                template:
+                  state: >-
+                    {% if is_state(entity_id, "off") %}
+
+                    Uit
+
+                    {% elif is_state_attr(entity_id, "app_id",
+                    "com.formulaone.production") %}
+
+                    Aan - F1 TV Pro
+
+                    {% elif is_state_attr(entity_id, "app_id",
+                    "com.google.android.youtube.tv") %}
+
+                    Aan - Youtube
+
+                    {% elif is_state_attr(entity_id, "app_id",
+                    "com.google.android.apps.tv.launcherx") %}
+
+                    Aan - Hoofdmenu
+
+                    {% elif is_state_attr(entity_id, "app_id",
+                    "nl.rtl.videoland.v2") %}
+
+                    Aan - Videoland
+
+                    {% else %}
+
+                    Aan
+
+                    {% endif %}
+                  icon: >-
+                    {% if is_state_attr(entity_id, "app_id",
+                    "com.formulaone.production") %}
+
+                    https://www.streamlocator.com/images/f1-tv-e91196d695d90340c81832cbfd393777.webp
+
+                    {% elif is_state_attr(entity_id, "app_id",
+                    "com.google.android.youtube.tv") %}
+
+                    https://betanews.com/wp-content/uploads/2017/08/new-youtube-logo.jpg
+
+                    {% else %}
+                      mdi:television
+                    {% endif %}
+              - type: button
+                id: 3143390235150
+                entity_id: switch.ps5_261_power
+                name: PS5
+              - type: button
+                id: 2481885440260
+                entity_id: media_player.sonos_zolderkamer
+                name: Sonos
+                marquee: true
+                template:
+                  icon: |2-
+                     {% if ':8096/' in state_attr(entity_id, 'media_content_id') %}
+                     https://avatars.githubusercontent.com/u/71128003?s=200&v=4
+                     {%- else -%}
+                     {{state_attr('media_player.sonos_zolderkamer', 'entity_picture') }}
+                     {%- endif -%}
+                color: '#4ba6ff'
+              - type: button
+                id: 9359528039114
+                entity_id: media_player.mass_zolderkamer
+                name: MASS
+                marquee: true
+            sections: []
+            id: 6436456471203
+          - name: ''
+            items:
+              - type: media
+                conditional:
+                  - entity_id: media_player.zolderkamer_google_tv_2
+                    name: Google TV
+                    icon: mdi:plex
+                    color: orange
+                  - entity_id: media_player.sonos_zolderkamer
+                    icon: cib:sonos
+                    name: Sonos
+                  - entity_id: media_player.mass_zolderkamer
+                id: 7292307281768
+            id: 9036434808021
+            sections: []
+        id: 5752835037941
+        items: []
+      - type: horizontal-stack
+        sections:
+          - name: Verlichting
+            items:
+              - type: button
+                id: 1397615280868
+                entity_id: light.lamp_plank_zolderkamer
+                name: Plank
+              - type: button
+                id: 5432210655370
+                entity_id: light.zolderkamer
+                name: Lamp
+            id: 2803414278736
+            sections: []
+          - name: Apparaten
+            items:
+              - type: button
+                id: 6822463192719
+                entity_id: climate.eurom_alutherm_zolder
+                name: Verwarming
+              - type: button
+                id: 4986803267808
+                entity_id: binary_sensor.nest_protect_office_smoke_status
+                name: Nest Protect
+                template:
+                  state: >-
+                    {% if is_state(entity_id, "on") or 
+                    is_state('binary_sensor.nest_protect_office_smoke_status',
+                    "on") %}
+                      Gevaar
+                    {% else %}
+                      Veilig
+                    {% endif %}
+                  color: >-
+                    {% if is_state(entity_id, "on") or 
+                    is_state('binary_sensor.nest_protect_office_smoke_status',
+                    "on") %}
+                      red
+                    {% else %}
+                      green
+                    {% endif %}
+              - type: button
+                id: 5197655452606
+                entity_id: switch.lg_monitor_groot
+                name: Monitor
+                icon: carbon:screen
+                template:
+                  state: |-
+                    {% if is_state(entity_id, 'on') -%}
+                     Aan - {{states('sensor.lg_monitor_groot_stroom', with_unit=True)}} 
+                    {%- else -%}
+                     Uit
+                    {%- endif -%} 
+                more_info: false
+              - id: 1394544171955
+                type: button
+                entity_id: switch.docking_station
+                more_info: false
+                template:
+                  state: |-
+                    {% if is_state(entity_id, 'on') -%}
+                     Aan - {{states('sensor.docking_station_stroom', with_unit=True)}}
+                    {%- else -%}
+                     Uit
+                    {%- endif -%} 
+                icon: carbon:laptop
+            id: 7778855310678
+            sections: []
+        id: 3736816756261
+        items: []
+    icon: arcticons:f1-tv
 sidebar:
-  - type: time
-    id: 3781246197457
-    hour12: false
-    seconds: false
-  - type: date
-    format: test
-    hide: none
-    shortday: false
-    shortmonth: false
-    id: 2790676345913
-  - type: template
-    id: 1506524483596
-    template: <b>Vecka {{ now().strftime("%W") }}</b>
-  - type: sensor
-    entity_id: sensor.template_greet
-    date: false
-    id: 2790676343773
+  - id: 6596201539135
+    type: datetime
+  - type: divider
+    id: 4645660022816
+  - type: person
+    id: 7522149764455
+    entity_id: person.stephan
+    entity_id_2: person.marieke
+    battery_level_sensor: sensor.stephan_mobiel_battery_level
+    battery_level_sensor_2: sensor.iphone_battery_level
+  - type: divider
+    id: 3261508858069
   - type: weather
-    entity_id: weather.openweathermap
-    weather_sensor: sensor.openweathermap_weather
-    extra_sensor: sensor.openweathermap_forecast_precipitation_probability
-    extra_sensor_icon: mdi:drop
-    icon_pack: meteocons
-    id: 2790676343766
+    id: 9339674531179
+    entity_id: weather.buienradar
+    weather_sensor: sensor.gevoelstemperatuur
   - type: divider
-    id: 6627143742873
-  - type: sensor
-    entity_id: sensor.template_laundry
-    id: 2790676343722
-  - type: sensor
-    entity_id: sensor.template_vacuum
-    id: 2790676343733
-  - type: sensor
-    entity_id: sensor.template_mailbox
-    id: 2790676343744
-    date: false
-  - type: sensor
-    entity_id: sensor.template_battery
-    id: 2790676343711
+    id: 8947830060024
   - type: navigate
-    id: 4055198699454
-  - type: timer
-    entity_id: timer.test
-    id: 5786160817081
+    id: 2866965765128
   - type: divider
-    id: 3349273168863
-  - type: radial
-    entity_id: sensor.processor_use
-    id: 1790176343741
-    stroke: 7
-    name: CPU
-  - id: 2805049029311
-    entity_id: sensor.memory_use_percent
-    type: bar
-    name: RAM
-    math: '22'
-  - type: graph
-    id: 7932142060181
-    period: day
-    entity_id: sensor.memory_use_percent
-    stroke: 2
+    id: 1675061150168
+  - id: 3477149145529
+    type: notifications
+theme: muted
+hide_views: true
+hide_sidebar: false
+sidebarWidth: 312

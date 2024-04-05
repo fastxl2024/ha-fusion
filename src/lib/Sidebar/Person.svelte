@@ -68,6 +68,14 @@
 		battery_level_sensor_icon_2 = $states?.[battery_level_sensor_2]?.attributes.icon;
 	}	
 
+	function handlePerson1Click() {
+    			openModal(() => import('$lib/Modal/DeviceTrackerModal.svelte'), { sel: entity })
+  	}	
+
+	function handlePerson2Click() {
+			openModal(() => import('$lib/Modal/DeviceTrackerModal.svelte'), { sel: entity_2 })
+  	}			
+
 </script>
 
 <div 
@@ -95,7 +103,7 @@
 			{/if}    
 		</div>
 	 	<div class="Image" >
-			<img src={entity?.attributes.entity_picture} alt="entity_picture" style="box-shadow: 0 0 20px {status_color}">		
+			<img src={entity?.attributes.entity_picture} alt="entity_picture" style="box-shadow: 0 0 20px {status_color}" on:click={handlePerson1Click}>		
 	 	</div>
 		
 		<div class="Battery">  
@@ -132,7 +140,7 @@
 		</div>  
 
 		<div class="Image">
-			<img src={entity_2?.attributes.entity_picture} alt="entity_picture" style="box-shadow: 0 0 20px {status_color_2}">
+			<img src={entity_2?.attributes.entity_picture} alt="entity_picture" style="box-shadow: 0 0 20px {status_color_2}" on:click={handlePerson2Click}>
 		</div>		 
 		<div class=Battery>
   			<div class="Icon">

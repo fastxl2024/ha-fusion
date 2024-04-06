@@ -15,12 +15,18 @@
 
 {#if isOpen}
 	<Modal>
-		<h1 slot="title">{getName(sel, entity)}</h1>
-
-		<Bar entity_id='sensor.solaredge_heatsink_temp' /><br>
-		Wekt nu op <StateLogic entity_id={sel?.entity_id} selected={sel} /> <br><br>
-		Aantal bomen geplant <StateLogic entity_id='sensor.solaradge_bomen_geplant' />
-		<Graph entity_id='sensor.solaredge_heatsink_temp' period='day' />
-		<ConfigButtons />
+		<h1 slot="title"><img src="https://www.solaredge.com/nl/sites/nl/files/SolarEdge_logo_header_new_0.svg" alt="test" style="max-width:120px; top:20px"></h1>
+		<Bar entity_id='sensor.solaredge_temp_sink' /><br>
+		<h2>Opgewekt:<br><br></h2>
+		Momenteel: <StateLogic entity_id='sensor.solaredge_ac_power' /> <br><br>
+		Vandaag: <StateLogic entity_id='sensor.solaredge_energy_today'/> <br><br>
+		Deze maand: <StateLogic entity_id='sensor.solaredge_energy_this_month'/> <br><br>
+		Dit jaar: <StateLogic entity_id='sensor.solaredge_energy_this_year'/> <br><br>
+		Aantal bomen geplant: <StateLogic entity_id='sensor.solaradge_bomen_geplant' />
+<!--	<Graph entity_id='sensor.nintendo_switch_power', period='day'/>-->
 	</Modal>
 {/if}
+
+<style>
+
+</style>

@@ -23,25 +23,6 @@
 	$: media_episode = attributes?.media_episode;
 	$: media_series_title = attributes?.media_series_title;
 
-	import { onMount, onDestroy } from 'svelte';
-  
-  	let value = 'Value 1'; // Initial value
-  
-  	const switchValues = () => {
-    	value = value === 'Value 1' ? 'Value 2' : 'Value 1'; // Switch between two values
-    	setTimeout(switchValues, 2000); // Schedule the next switch after 3 seconds
-  	};	
-  
-  	onMount(() => {
-    	// Start switching values when the component is mounted
-    	switchValues();
- 	});
-  
-  	onDestroy(() => {
-    	// Stop switching values when the component is destroyed
-    	clearTimeout(switchValues);
-  	});	
-
 </script>
 
 <!-- Light -->
@@ -122,7 +103,7 @@
 
 	<!--  Climate -->
 {:else if getDomain(entity_id) === 'climate' && attributes?.hvac_action}
-	{$lang(attributes?.hvac_action)} {value}
+	{$lang(attributes?.hvac_action)}
 
 	<!--  Climate -->
 {:else if getDomain(entity_id) === 'update'}

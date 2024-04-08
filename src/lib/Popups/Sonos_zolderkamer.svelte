@@ -13,8 +13,17 @@
 	import { getName } from '$lib/Utils';
 
 	export let isOpen: boolean;
-	export let selected: any;
+	export let sel: any;
+	import { Swipe, SwipeItem } from "svelte-swipe";
 
+    const swipeConfig = {
+      autoplay: false,
+      delay: 2000,
+      showIndicators: true,
+      transitionDuration: 1000,
+      defaultIndex: 0,
+    };
+	
 	let attributes: any;
 	let interval: ReturnType<typeof setInterval>;
 	let tick = Date.now();
@@ -26,7 +35,7 @@
 	let nextPosition: number | undefined = undefined;
 	let currentSliderValue = 0;
 
-	$: entity = $states[selected?.entity_id];
+	$: entity = $states[sel?.entity_id];
 	$: attributes = entity?.attributes;
 	$: playing = entity?.state === 'playing';
 	$: updated_at = new Date(attributes?.media_position_updated_at).getTime();
@@ -114,8 +123,10 @@
 
 {#if isOpen}
 	<Modal>
-		<h1 slot="title">{getName(selected, entity)}</h1>
-
+		<h1 slot="title">{getName(sel, entity)}</h1>
+        <div class="swipe-holder">
+            <Swipe {...swipeConfig}>
+                <SwipeItem>
 		<h2>
 			{#if attributes?.media_content_type === 'tvshow'}
 				{attributes?.media_series_title} - S{season}E{episode} - {attributes?.media_title}
@@ -226,14 +237,14 @@
 
 		{$lang('volume_level')}
 
-		<div class="vol-container">
+		<div class="vol-container">	
 			<!-- volume_up -->
 			<button on:click={() => handleClick('volume_up')} use:Ripple={$ripple}>
 				<div style="scale: 90%; margin-bottom: -0.2rem;">
 					<Icon icon="typcn:plus" height="none" />
 				</div>
 			</button>
-
+			
 			<!-- vol text -->
 			<div>VOL</div>
 
@@ -249,10 +260,56 @@
 				</div>
 			</button>
 		</div>
+    </SwipeItem>
+    <SwipeItem>
+		<div class="media-select-container">
+			<!-- previous -->
+			<button
+				use:Ripple={$ripple}
+				on:click={() => {
+					handleClick('media_previous_track');
+				}}
+			>
+				<Icon icon="ic:round-fast-rewind" height="none" />
+			</button>
+
+			<!-- pause -->
+			<button
+				use:Ripple={$ripple}
+				style:display={entity?.state === 'playing' ? 'block' : 'none'}
+				on:click={() => {
+					handleClick('media_pause');
+				}}
+			>
+				<Icon icon="ic:round-pause" height="none" />
+			</button>
+
+			<!-- play -->
+			<button
+				on:click={() => handleClick('media_play')}
+				use:Ripple={$ripple}
+				style:display={entity?.state !== 'playing' ? 'block' : 'none'}
+			>
+				<Icon icon="ic:round-play-arrow" height="none" />
+			</button>
+
+			<!-- next -->
+			<button on:click={() => handleClick('media_next_track')} use:Ripple={$ripple}>
+				<Icon icon="ic:round-fast-forward" height="none" />
+			</button>
+		</div>
+    </SwipeItem>
+</Swipe>
+</div>        
 	</Modal>
 {/if}
 
 <style>
+    .swipe-holder{
+      height: 75vh;
+      width: 95%;
+    }
+
 	.time-container {
 		display: flex;
 		justify-content: space-between;
@@ -272,6 +329,13 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+	}
+
+	.media-select-container {
+		display: flex;
+		justify-content: space-between;
+		width: 70%;
+		margin: auto;
 	}
 
 	img {

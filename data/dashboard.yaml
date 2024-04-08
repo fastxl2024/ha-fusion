@@ -6,6 +6,9 @@ views:
         sections:
           - name: Home
             items:
+              - id: 2789336499217
+                type: button
+                entity_id: sensor.solaredge_modbus
               - type: button
                 id: 3424569424984
                 entity_id: binary_sensor.voordeur_deur
@@ -34,7 +37,7 @@ views:
                     {% endif %}
               - type: button
                 id: 3133618352202
-                entity_id: climate.01_087939
+                entity_id: sensor.cv_ketel_stroom
                 name: CV Ketel
                 template:
                   icon: |-
@@ -48,7 +51,7 @@ views:
                     states('sensor.dsmr_day_consumption_gas', with_unit=True) }}
               - type: button
                 id: 3350009560432
-                entity_id: sensor.solaredge_energy_today
+                entity_id: sensor.solar_production_daily
                 name: Vandaag opgewekt
                 icon: material-symbols:solar-power-outline
               - type: button
@@ -95,7 +98,7 @@ views:
             items:
               - type: camera
                 id: 4008746747412
-                entity_id: camera.deurbel_vloeiend
+                entity_id: camera.reolink_video_doorbell_poe_fluent
                 width: 2560
                 height: 1920
                 stream: true
@@ -214,8 +217,7 @@ views:
                 entity_id: cover.screen
               - type: button
                 id: 8902964862847
-                entity_id: cover.curtain_4dda
-                name: Gordijnen
+                entity_id: cover.gordijnen
             id: 4526349504733
             sections: []
         id: 8507184355964
@@ -247,8 +249,8 @@ views:
                 entity_id: sensor.vaatwasser_stroom
                 template:
                   state: |-
-                    {% if states('sensor.vaatwasser_power') | float > 5 -%}
-                     Aan - {{states('sensor.vaatwasser_power', with_unit=True)}} 
+                    {% if states('sensor.vaatwasser_stroom') | float > 5 -%}
+                     Aan - {{states('sensor.vaatwasser_stroom', with_unit=True)}} 
                     {%- else -%}
                      Uit
                     {%- endif -%} 
@@ -259,8 +261,8 @@ views:
                 entity_id: sensor.quooker_stroom
                 template:
                   state: |-
-                    {% if states('sensor.quooker_power') | float > 5 -%}
-                     Opwarmen - {{states('sensor.quooker_power', with_unit=True)}} 
+                    {% if states('sensor.quooker_stroom') | float > 5 -%}
+                     Opwarmen - {{states('sensor.quooker_stroom', with_unit=True)}} 
                     {%- else -%}
                      Uit
                     {%- endif -%} 
@@ -278,8 +280,8 @@ views:
                 name: Wasmachine
                 template:
                   state: |-
-                    {% if states('sensor.wasmachine_power') | float > 5 -%}
-                     Wassen - {{states('sensor.wasmachine_power', with_unit=True)}} 
+                    {% if states('sensor.wasmachine_stroom') | float > 5 -%}
+                     Wassen - {{states('sensor.wasmachine_stroom', with_unit=True)}} 
                     {%- else -%}
                      Uit
                     {%- endif -%} 
@@ -296,8 +298,8 @@ views:
                 name: Wasdroger
                 template:
                   state: |-
-                    {% if states('sensor.wasdroger_power') | float > 5 -%}
-                     Aan - {{states('sensor.wasdroger_power', with_unit=True)}} 
+                    {% if states('sensor.wasdroger_stroom') | float > 5 -%}
+                     Aan - {{states('sensor.wasdroger_stroom', with_unit=True)}} 
                     {%- else -%}
                      Uit
                     {%- endif -%}
@@ -466,68 +468,18 @@ views:
         sections:
           - name: Entertainment
             items:
-              - id: 7282673648723
+              - id: 8210402849612
                 type: button
-                entity_id: media_player.zolderkamer_google_tv_2
-              - id: 7385488251675
-                type: button
-                entity_id: media_player.zolderkamer_google_tv
+                entity_id: media_player.plex_zolderkamer
+                name: Plex
+                icon: cbi:plex
+                marquee: true
                 template:
-                  state: >-
-                    {% if is_state(entity_id, "off") %}
-
-                    Uit
-
-                    {% elif is_state_attr(entity_id, "app_id",
-                    "com.formulaone.production") %}
-
-                    Aan - F1 TV Pro
-
-                    {% elif is_state_attr(entity_id, "app_id",
-                    "com.google.android.youtube.tv") %}
-
-                    Aan - Youtube
-
-                    {% elif is_state_attr(entity_id, "app_id",
-                    "com.google.android.apps.tv.launcherx") %}
-
-                    Aan - Hoofdmenu
-
-                    {% elif is_state_attr(entity_id, "app_id",
-                    "nl.rtl.videoland.v2") %}
-
-                    Aan - Videoland
-
-                    {% elif is_state_attr(entity_id, "app_id",
-                    "com.stremio.one") %}
-
-                    Stremio - {{
-                    state_attr('media_player.zolderkamer_google_tv',
-                    'media_title') }}
-
-                    {% else %}
-
-                    Aan
-
-                    {% endif %}
-                  icon: >-
-                    {% if is_state_attr(entity_id, "app_id",
-                    "com.formulaone.production") %}
-
-                    https://www.streamlocator.com/images/f1-tv-e91196d695d90340c81832cbfd393777.webp
-
-                    {% elif is_state_attr(entity_id, "app_name", "YouTube") %}
-
-                    https://betanews.com/wp-content/uploads/2017/08/new-youtube-logo.jpg
-
-                    {% elif is_state_attr(entity_id, "app_name", "Stremio") %}
-
-                    https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/1c/ef/01/1cef01c8-00be-1f19-2f97-10dce27b71c3/AppIcon-1x_U007emarketing-0-7-0-85-220.png/256x256bb.jpg
-
-                    {% else %}
-                      mdi:television
-                    {% endif %}
-                  name: Google Tv
+                  service: |-
+                    service: media_player.media_play_pause
+                    data: {
+                      entity_id: media_player.zolderkamer_google_tv
+                        }
               - type: button
                 id: 2513478060366
                 entity_id: media_player.zolderkamer_google_tv_2
@@ -559,13 +511,6 @@ views:
 
                     Aan - Videoland
 
-                    {% elif is_state_attr(entity_id, "app_id",
-                    "com.stremio.one") %}
-
-                    Stremio - {{
-                    state_attr('media_player.zolderkamer_google_tv',
-                    'media_title') }}
-
                     {% else %}
 
                     Aan
@@ -581,11 +526,6 @@ views:
                     "com.google.android.youtube.tv") %}
 
                     https://betanews.com/wp-content/uploads/2017/08/new-youtube-logo.jpg
-
-                    {% elif is_state_attr(entity_id, "app_id",
-                    "com.stremio.one") %}
-
-                    https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/1c/ef/01/1cef01c8-00be-1f19-2f97-10dce27b71c3/AppIcon-1x_U007emarketing-0-7-0-85-220.png/256x256bb.jpg
 
                     {% else %}
                       mdi:television
@@ -606,10 +546,6 @@ views:
                      {%- else -%}
                      {{state_attr('media_player.sonos_zolderkamer', 'entity_picture') }}
                      {%- endif -%}
-                  service: |-
-                    service: media_player.media_play_pause
-                    data: 
-                      entity_id: {{ entity_id }}
                 color: '#4ba6ff'
               - type: button
                 id: 9359528039114
@@ -622,8 +558,9 @@ views:
             items:
               - type: media
                 conditional:
-                  - entity_id: media_player.zolderkamer_google_tv
+                  - entity_id: media_player.zolderkamer_google_tv_2
                     name: Google TV
+                    icon: mdi:plex
                     color: orange
                   - entity_id: media_player.sonos_zolderkamer
                     icon: cib:sonos
@@ -683,7 +620,7 @@ views:
                 template:
                   state: |-
                     {% if is_state(entity_id, 'on') -%}
-                     Aan - {{states('sensor.lg_monitor_groot_power', with_unit=True)}} 
+                     Aan - {{states('sensor.lg_monitor_groot_stroom', with_unit=True)}} 
                     {%- else -%}
                      Uit
                     {%- endif -%} 
@@ -695,7 +632,7 @@ views:
                 template:
                   state: |-
                     {% if is_state(entity_id, 'on') -%}
-                     Aan - {{states('sensor.docking_station_power', with_unit=True)}}
+                     Aan - {{states('sensor.docking_station_stroom', with_unit=True)}}
                     {%- else -%}
                      Uit
                     {%- endif -%} 
@@ -720,7 +657,7 @@ sidebar:
     id: 3261508858069
   - type: weather
     id: 9339674531179
-    entity_id: weather.forecast_thuis
+    entity_id: weather.buienradar
     weather_sensor: sensor.gevoelstemperatuur
   - type: divider
     id: 8947830060024

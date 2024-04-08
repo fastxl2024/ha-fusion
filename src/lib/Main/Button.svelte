@@ -178,14 +178,12 @@
 			});
 		} else if (more_info === false) {
 			toggle();
-		} else if ((sel?.entity_id) === 'sensor.solaredge_energy_today') {
+		} else if ((sel?.entity_id) === 'sensor.solaredge_modbus') {
 			openModal(() => import('$lib/Popups/Solar.svelte'), {sel: sel});
 		} else if ((sel?.entity_id) === 'media_player.plex_zolderkamer') {
 			openModal(() => import('$lib/Popups/Plex.svelte'), {sel: sel});
-		} else if ((sel?.entity_id) === 'media_player.zolderkamer_google_tv_2') {
-			openModal(() => import('$lib/Popups/Google_tv_zolder.svelte'), {sel: sel});
-		} else if ((sel?.entity_id) === 'media_player.sonos_zolderkamer') {
-			openModal(() => import('$lib/Popups/Sonos_zolderkamer.svelte'), {sel: sel});								
+//		} else if ((sel?.entity_id) === 'media_player.plex_zolderkamer') {
+//			openModal(() => import('$lib/Popups/Solar.svelte'), {sel: sel});			
 		} else {
 			switch (getDomain(sel?.entity_id)) {
 				// light

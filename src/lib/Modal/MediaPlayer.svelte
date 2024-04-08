@@ -15,6 +15,8 @@
 	export let isOpen: boolean;
 	export let selected: any;
 
+
+	
 	let attributes: any;
 	let interval: ReturnType<typeof setInterval>;
 	let tick = Date.now();
@@ -226,14 +228,14 @@
 
 		{$lang('volume_level')}
 
-		<div class="vol-container">
+		<div class="vol-container">	
 			<!-- volume_up -->
 			<button on:click={() => handleClick('volume_up')} use:Ripple={$ripple}>
 				<div style="scale: 90%; margin-bottom: -0.2rem;">
 					<Icon icon="typcn:plus" height="none" />
 				</div>
 			</button>
-
+			
 			<!-- vol text -->
 			<div>VOL</div>
 

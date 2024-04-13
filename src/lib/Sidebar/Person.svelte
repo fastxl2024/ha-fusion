@@ -3,8 +3,8 @@
 	import type { HassEntity } from 'home-assistant-js-websocket';
 	import { openModal } from 'svelte-modals';
 	import Icon from '@iconify/svelte';
-	export let isOpen: boolean;
-	export let sel: any;
+//	export let isOpen: boolean;
+//	export let sel: any;
 
 
 	export let entity_id: string | undefined = undefined;

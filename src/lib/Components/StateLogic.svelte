@@ -28,7 +28,7 @@
   	let value = 'Value 1'; // Initial value
   
   	const switchValues = () => {
-    	value = value === 'Value 1' ? 'Value 2' : 'Value 1'; // Switch between two values
+    	value = value === attributes?.hvac_action ? attributes?.temperature + " ˚C" + " / "+ attributes?.current_temperature + " ˚C" : attributes?.hvac_action; // Switch between two values
     	setTimeout(switchValues, 2000); // Schedule the next switch after 3 seconds
   	};	
   
@@ -122,7 +122,7 @@
 
 	<!--  Climate -->
 {:else if getDomain(entity_id) === 'climate' && attributes?.hvac_action}
-	{$lang(attributes?.hvac_action)} {value}
+	{$lang(value)}
 
 	<!--  Climate -->
 {:else if getDomain(entity_id) === 'update'}

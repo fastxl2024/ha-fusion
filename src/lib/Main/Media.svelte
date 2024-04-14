@@ -74,7 +74,7 @@
 	) {
 		backgroundImage = `url(${youtube_watching?.state?.replace('https://img.youtube.com', '')})`;
 	} else if (entity && entity?.attributes?.entity_picture) {
-		backgroundImage = `url("${entity?.attributes?.entity_picture}")`;
+		backgroundImage = `url("${entity?.attributes?.entity_picture.replace('w120-h120', 'w300')}")`;
 	} else if (!entity && sensor) {
 		backgroundImage = `url("${sensor?.attributes?.data?.[1]?.fanart}"), url("${sensor?.attributes?.data?.[1]?.poster}")`;
 	} else {

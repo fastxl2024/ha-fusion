@@ -61,7 +61,6 @@ views:
                 entity_id: sensor.solaredge_energy_today
                 name: Energie opgewekt
                 icon: material-symbols:solar-power-outline
-                more_info: false
                 template:
                   color: |-
                     {% if is_state('sensor.solaredge_status', "4") %} 
@@ -660,7 +659,7 @@ views:
                 marquee: true
                 template:
                   icon: |2-
-                     {% if ':8096/' in state_attr(entity_id, 'media_content_id') %}
+                     {% if ':8097/' in state_attr(entity_id, 'media_content_id') %}
                      https://avatars.githubusercontent.com/u/71128003?s=200&v=4
                      {%- else -%}
                      {{state_attr('media_player.sonos_zolderkamer', 'entity_picture') }}
@@ -675,6 +674,10 @@ views:
                 entity_id: media_player.mass_zolderkamer
                 name: MASS
                 marquee: true
+                template:
+                  service: |-
+                    service: media_player.media_play_pause
+                    data: {}
             sections: []
             id: 6436456471203
           - name: ''
@@ -684,9 +687,6 @@ views:
                   - entity_id: media_player.zolderkamer_google_tv
                     name: Google TV
                     color: orange
-                  - entity_id: media_player.sonos_zolderkamer
-                    icon: cib:sonos
-                    name: Sonos
                   - entity_id: media_player.mass_zolderkamer
                 id: 7292307281768
             id: 9036434808021

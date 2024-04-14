@@ -8,7 +8,7 @@ views:
             items:
               - type: button
                 id: 3424569424984
-                entity_id: binary_sensor.voordeur_deur
+                entity_id: binary_sensor.voordeur_contact
                 name: Deuren
                 template:
                   set_state: >-
@@ -21,16 +21,23 @@ views:
                     {% endif %}
                   state: >-
                     {% if is_state(entity_id, 'on') and
-                    is_state('binary_sensor.achterdeur_deur', 'on')%}
+                    is_state('binary_sensor.achterdeur_contact', 'on')%}
                       Deuren open
                     {% elif is_state(entity_id, 'on') and
-                    is_state('binary_sensor.achterdeur_deur', 'off')%}
+                    is_state('binary_sensor.achterdeur_contact', 'off')%}
                       Voordeur open
                     {% elif is_state(entity_id, 'off') and
-                    is_state('binary_sensor.achterdeur_deur', 'on')%}
+                    is_state('binary_sensor.achterdeur_contact', 'on')%}
                       Achterdeur open
                     {% else %}
                       Gesloten
+                    {% endif %}
+                  icon: >-
+                    {% if is_state(entity_id, 'on') or
+                    is_state('binary_sensor.achterdeur_deur', 'on')%}
+                      mdi:door-open
+                    {% else %}
+                      mdi:door
                     {% endif %}
               - type: button
                 id: 3133618352202
@@ -43,14 +50,25 @@ views:
                     {% else %}
                       material-symbols:mode-heat-off
                     {% endif %}
-                  state: >-
-                    {{ states(entity_id, with_unit=True) }} - {{
-                    states('sensor.dsmr_day_consumption_gas', with_unit=True) }}
+                  state: |-
+                    {% if is_state(entity_id, "heat") %}
+                      Verwarmen - {{ states('sensor.dsmr_day_consumption_gas', with_unit=True) }}
+                    {% else %}
+                      Uit - {{ states('sensor.dsmr_day_consumption_gas', with_unit=True) }}
+                    {% endif %}
               - type: button
                 id: 3350009560432
                 entity_id: sensor.solaredge_energy_today
-                name: Vandaag opgewekt
+                name: Energie opgewekt
                 icon: material-symbols:solar-power-outline
+                more_info: false
+                template:
+                  color: |-
+                    {% if is_state('sensor.solaredge_status', "4") %} 
+                      green
+                    {% else %}
+                      
+                    {% endif %}
               - type: button
                 id: 1325420133823
                 entity_id: sensor.dsmr_day_consumption_electricity_merged
@@ -88,7 +106,6 @@ views:
                     {% else %}
                       Veilig
                     {% endif %}
-                more_info: false
             id: 4931844050329
             sections: []
           - name: ''
@@ -228,6 +245,13 @@ views:
                 id: 2309051995150
                 entity_id: climate.01_087939_00
                 name: Verwarming
+                template:
+                  icon: |-
+                    {% if is_state(entity_id, "heat") %}
+                      mdi:radiator
+                    {% else %}
+                      mdi:radiator-off
+                    {% endif %}
               - type: button
                 id: 2042197139103
                 entity_id: climate.airco_woonkamer
@@ -372,6 +396,13 @@ views:
                 id: 2520733356342
                 entity_id: climate.01_087939_02
                 name: Verwarming
+                template:
+                  icon: |-
+                    {% if is_state(entity_id, "heat") %}
+                      mdi:radiator
+                    {% else %}
+                      mdi:radiator-off
+                    {% endif %}
               - type: button
                 id: 3830501641858
                 entity_id: light.lamp_badkamer
@@ -383,7 +414,7 @@ views:
                 name: Spotje
               - type: button
                 id: 6465024919507
-                entity_id: fan.mechanical_ventilation
+                entity_id: fan.preset_mode_fan
                 name: Afzuiging
             id: 4678980917971
             sections: []
@@ -393,6 +424,13 @@ views:
                 id: 6662812327542
                 entity_id: climate.01_087939_03
                 name: Verwarming
+                template:
+                  icon: |-
+                    {% if is_state(entity_id, "heat") %}
+                      mdi:radiator
+                    {% else %}
+                      mdi:radiator-off
+                    {% endif %}
               - type: button
                 id: 3855980877089
                 entity_id: light.lamp_slaapkamer
@@ -414,6 +452,13 @@ views:
                 id: 8975532940100
                 entity_id: climate.01_087939_04
                 name: Verwarming
+                template:
+                  icon: |-
+                    {% if is_state(entity_id, "heat") %}
+                      mdi:radiator
+                    {% else %}
+                      mdi:radiator-off
+                    {% endif %}
               - type: button
                 id: 8602667084118
                 entity_id: light.lamp_slaapkamer_evi
@@ -426,9 +471,16 @@ views:
                 id: 9496597008047
                 entity_id: climate.01_087939_05
                 name: Verwarming
+                template:
+                  icon: |-
+                    {% if is_state(entity_id, "heat") %}
+                      mdi:radiator
+                    {% else %}
+                      mdi:radiator-off
+                    {% endif %}
               - type: button
                 id: 7457649180413
-                entity_id: light.wled_slaapkamer_nova
+                entity_id: light.wled
                 name: Ledstrip
             id: 9683373546372
             sections: []
@@ -442,6 +494,13 @@ views:
                 id: 2343781557343
                 entity_id: climate.01_087939_06
                 name: Verwarming
+                template:
+                  icon: |-
+                    {% if is_state(entity_id, "heat") %}
+                      mdi:radiator
+                    {% else %}
+                      mdi:radiator-off
+                    {% endif %}
               - type: button
                 id: 6720397123832
                 entity_id: light.lamp_kastenkamer
@@ -452,7 +511,7 @@ views:
             items:
               - type: button
                 id: 7940461697945
-                entity_id: light.zolder_voorruimte
+                entity_id: light.zolderkamer
                 name: Lamp
             id: 2043698998800
             sections: []

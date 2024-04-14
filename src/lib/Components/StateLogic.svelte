@@ -26,9 +26,13 @@
 	import { onMount, onDestroy } from 'svelte';
   
   	let value = 'Value 1'; // Initial value
+	let value_solar_now_and_day = 'Value Solar Now and Day';
   
   	const switchValues = () => {
-    	value = value === attributes?.hvac_action ? attributes?.temperature + " ˚C" + " / "+ attributes?.current_temperature + " ˚C" : attributes?.hvac_action; // Switch between two values
+    	//value = value === attributes?.hvac_action ? attributes?.temperature + " ˚C" + " / "+ attributes?.current_temperature + " ˚C" : attributes?.hvac_action; // Switch between two values
+		value = value === attributes?.hvac_action ? attributes?.temperature + " ˚C" + " / "+ attributes?.current_temperature + " ˚C" : attributes?.hvac_action; // Switch between two values
+		value_solar_now_and_day = value_solar_now_and_day === 'Vandaag: ' + $states?.['sensor.solaredge_energy_today']?.state + ' W'? 'Huidig: ' + $states?.['sensor.solaredge_ac_power']?.state + ' W' : 'Vandaag: ' + $states?.['sensor.solaredge_energy_today']?.state + ' W';
+
     	setTimeout(switchValues, 2000); // Schedule the next switch after 3 seconds
   	};	
   
@@ -53,8 +57,8 @@
 	{@const floor = percentage < 0.01 && percentage > 0 ? 0.01 : percentage}
 	{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(floor)}
 
-	<!-- Media
-{:else if state === 'playing' && attributes?.media_content_id.includes(':8096/')}
+	<!-- Media-->
+{:else if state === 'playing' && attributes?.media_content_id.includes(':8097/')}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}
 	{#if selected?.marquee === true && contentWidth && contentWidth > 153 && !$editMode}
 		{#await import('$lib/Components/Marquee.svelte')}
@@ -66,7 +70,7 @@
 		{/await}
 	{:else}
 		{@html 'Music Assistant'}
-	{/if}-->
+	{/if}
 	
 {:else if media_artist && media_title && state === 'playing'}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}
@@ -122,8 +126,11 @@
 
 	<!--  Climate -->
 {:else if getDomain(entity_id) === 'climate' && attributes?.hvac_action}
-	{$lang(value)}
-
+    {#if attributes?.hvac_action === 'off'}
+		{$lang(attributes?.hvac_action)}
+	{:else}
+		{$lang(value)}
+	{/if}
 	<!--  Climate -->
 {:else if getDomain(entity_id) === 'update'}
 	{#if attributes?.in_progress}
@@ -184,7 +191,14 @@
 		{$lang('closed')}
 	{/if}	
 
-	
+	<!-- Solar/system -->
+{:else if entity_id === 'sensor.solaredge_energy_today'}
+	{#if $states?.['sensor.solaredge_status']?.state == '4'}
+		{value_solar_now_and_day}
+	{:else}
+		Vandaag: {state} W
+	{/if}
+		
 	<!-- State  -->
 {:else if state}
 	{#if selected?.marquee && contentWidth && contentWidth > 153 && !$editMode}

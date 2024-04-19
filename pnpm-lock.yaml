@@ -86,6 +86,9 @@ dependencies:
   svelte-swipe:
     specifier: ^2.0.4
     version: 2.0.4(svelte@4.2.11)
+  svelte-swiper:
+    specifier: ^1.0.1
+    version: 1.0.1
   svelte-tiny-virtual-list:
     specifier: ^2.0.5
     version: 2.0.5
@@ -1621,6 +1624,12 @@ packages:
       esutils: 2.0.3
     dev: true
 
+  /dom7@3.0.0:
+    resolution: {integrity: sha512-oNlcUdHsC4zb7Msx7JN3K0Nro1dzJ48knvBOnDPKJ2GV9wl1i5vydJZUSyOfrkKFDZEud/jBsTk92S/VGSAe/g==}
+    dependencies:
+      ssr-window: 3.0.0
+    dev: false
+
   /dotenv@16.4.5:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
@@ -3101,6 +3110,10 @@ packages:
       extend-shallow: 3.0.2
     dev: false
 
+  /ssr-window@3.0.0:
+    resolution: {integrity: sha512-q+8UfWDg9Itrg0yWK7oe5p/XRCJpJF9OBtXfOPgSJl+u3Xd5KI328RUEvUqSMVM9CiQUEf1QdBzJMkYGErj9QA==}
+    dev: false
+
   /statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
@@ -3302,6 +3315,12 @@ packages:
       svelte: 4.2.11
     dev: false
 
+  /svelte-swiper@1.0.1:
+    resolution: {integrity: sha512-a13W61mNZwKT7t3ivOA/ahP1xhZ0CZlTlBtF+GFFQB5gCOCd8JNMvbO9R0TsjfLhKHyW9XcR1lLB1UavMOlXfg==}
+    dependencies:
+      swiper: 6.8.4
+    dev: false
+
   /svelte-tiny-virtual-list@2.0.5:
     resolution: {integrity: sha512-xg9ckb8UeeIme4/5qlwCrl2QNmUZ8SCQYZn3Ji83cUsoASqRNy3KWjpmNmzYvPDqCHSZjruBBsoB7t5hwuzw5g==}
     dev: false
@@ -3324,6 +3343,15 @@ packages:
       locate-character: 3.0.0
       magic-string: 0.30.7
       periscopic: 3.1.0
+
+  /swiper@6.8.4:
+    resolution: {integrity: sha512-O+buF9Q+sMA0H7luMS8R59hCaJKlpo8PXhQ6ZYu6Rn2v9OsFd4d1jmrv14QvxtQpKAvL/ZiovEeANI/uDGet7g==}
+    engines: {node: '>= 4.7.0'}
+    requiresBuild: true
+    dependencies:
+      dom7: 3.0.0
+      ssr-window: 3.0.0
+    dev: false
 
   /text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}

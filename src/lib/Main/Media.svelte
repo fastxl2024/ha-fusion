@@ -4,6 +4,7 @@
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
 	import { getName } from '$lib/Utils';
 	import { getGraphEntity } from '$lib/Modal/getRandomEntity';
+	import Sonos_line_in_icon from '$lib/Images/sonos-line-in.jpeg'
 
 	export let sel: any;
 
@@ -73,6 +74,8 @@
 		entity?.attributes?.media_title === youtube_watching?.attributes?.title
 	) {
 		backgroundImage = `url(${youtube_watching?.state?.replace('https://img.youtube.com', '')})`;
+	} else if (entity && entity?.attributes?.source === 'Line-in') {
+		backgroundImage = {Sonos_line_in_icon};		
 	} else if (entity && entity?.attributes?.entity_picture) {
 		backgroundImage = `url("${entity?.attributes?.entity_picture.replace('w120-h120', 'w300')}")`;
 	} else if (!entity && sensor) {

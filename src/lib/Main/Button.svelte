@@ -180,8 +180,10 @@
 			toggle();
 		} else if ((sel?.entity_id) === 'sensor.solaredge_energy_today') {
 			openModal(() => import('$lib/Popups/Solar.svelte'), {sel: sel});
+		} else if ((sel?.entity_id) === 'media_player.sonos_zolderkamer') {
+			openModal(() => import('$lib/Popups/Media_player.svelte'), {sel: sel});
 		} else if ((sel?.entity_id) === 'media_player.mass_zolderkamer') {
-			openModal(() => import('$lib/Popups/Sonos_zolderkamer.svelte'), {sel: sel});		
+			openModal(() => import('$lib/Popups/Media_player.svelte'), {sel: sel});					
 		} else {
 			switch (getDomain(sel?.entity_id)) {
 				// light

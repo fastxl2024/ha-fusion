@@ -103,11 +103,6 @@
 		callService($connection, 'media_player', service, {
 			entity_id: (entity_id)
 		});
-	function handleClick1(service: string) {
-		callService($connection, 'media_player', service, {
-			entity_id: (entity_id)
-		});
-	}		
 	}
 
 //	function handleClickfavorite(favorite: string) {
@@ -195,14 +190,16 @@
 					{/if}
 				</SwipeItem>
 				<SwipeItem>
-					<div class="vol-container">	
-						<!-- volume_up -->
-						<button on:click={() => handleClick('volume_up')} use:Ripple={$ripple}>
-							<div style="scale: 90%; margin-bottom: -0.2rem;">
-								<Icon icon="typcn:plus" height="none" />
-							</div>
-						</button>
-					</div>   
+					<div class="media-select-container">
+						<div class="vol-container">	
+							<!-- volume_up -->
+							<button on:click={() => handleClick('volume_up')} use:Ripple={$ripple}>
+								<div style="scale: 90%; margin-bottom: -0.2rem;">
+									<Icon icon="typcn:plus" height="none" />
+								</div>
+							</button>
+						</div>   
+					</div>
 				</SwipeItem>
 		</Swipe>
 		</div>
@@ -279,6 +276,7 @@
 
     .swipe-holder{
       height: 90vh;
+	  width: auto;
     }
 
 	.time-container {

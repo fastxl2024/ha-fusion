@@ -8,11 +8,14 @@
   import Ubiquiti_logo from '$lib/Images/ubiquitinetworks-edited.png'
   import UDM_SE_image from '$lib/Images/udm_se.png'
 	import { ImageSource } from 'maplibre-gl';
+	import Sensor from '$lib/Sidebar/Sensor.svelte';
 
 	export let isOpen: boolean;
 	export let sel: any;
+  let status_color = '#0000FF';
 
-	$: entity = $states[sel?.entity_id];
+	$: entity = $states['sensor.udm_se_info'];
+
 </script>
 
 {#if isOpen}
@@ -60,22 +63,22 @@
             <div class="Port5">
               <div class="Name">Port 5</div>
               <div class="Value">
-              <StateLogic entity_id='sensor.udm_se_port_3_poe_power'/></div>
+              <StateLogic entity_id='sensor.udm_se_port_5_poe_power'/></div>
             </div> 
             <div class="Port6">
               <div class="Name">Port 6</div>
               <div class="Value">
-              <StateLogic entity_id='sensor.udm_se_port_3_poe_power'/></div>
+              <StateLogic entity_id='sensor.udm_se_port_6_poe_power'/></div>
             </div> 
             <div class="Port7">
               <div class="Name">Port 7</div>
               <div class="Value">
-              <StateLogic entity_id='sensor.udm_se_port_3_poe_power'/></div>
+              <StateLogic entity_id='sensor.udm_se_port_7_poe_power'/></div>
             </div> 
             <div class="Port8">
               <div class="Name">Port 8</div>
               <div class="Value">
-              <StateLogic entity_id='sensor.udm_se_port_3_poe_power'/></div>
+              <StateLogic entity_id='sensor.udm_se_port_8_poe_power'/></div>
             </div> 
           </div>
 

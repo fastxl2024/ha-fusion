@@ -105,6 +105,17 @@ views:
                     {% else %}
                       Veilig
                     {% endif %}
+              - id: 4998810301711
+                type: button
+                entity_id: sensor.udm_info
+                template:
+                  state: |-
+                    {% if is_state(entity_id, "true") %}
+                      Online
+                    {% else %}
+                      Offline
+                    {% endif %}
+                name: Netwerk
             id: 4931844050329
             sections: []
           - name: ''
@@ -387,6 +398,14 @@ views:
   - name: Boven
     id: 2513855701464
     sections:
+      - name: Hal
+        items:
+          - id: 3526942049219
+            type: button
+            entity_id: light.schakelaartrap_nachtlamp
+            more_info: false
+            name: Nachtlamp
+        id: 4551105229185
       - type: horizontal-stack
         sections:
           - name: Badkamer
@@ -661,6 +680,8 @@ views:
                   icon: |2-
                      {% if ':8097/' in state_attr(entity_id, 'media_content_id') %}
                      https://avatars.githubusercontent.com/u/71128003?s=200&v=4
+                     {% elif is_state_attr(entity_id, 'source', 'Line-in')%}
+                     mdi:audio-input-stereo-minijack
                      {%- else -%}
                      {{state_attr('media_player.sonos_zolderkamer', 'entity_picture') }}
                      {%- endif -%}
@@ -678,6 +699,7 @@ views:
                   service: |-
                     service: media_player.media_play_pause
                     data: {}
+                  icon: https://avatars.githubusercontent.com/u/71128003?s=200&v=4
             sections: []
             id: 6436456471203
           - name: ''
@@ -687,7 +709,11 @@ views:
                   - entity_id: media_player.zolderkamer_google_tv
                     name: Google TV
                     color: orange
+                  - entity_id: media_player.sonos_zolderkamer
+                    name: Sonos
                   - entity_id: media_player.mass_zolderkamer
+                    name: Music Assistant
+                    icon: https://avatars.githubusercontent.com/u/71128003?s=200&v=4
                 id: 7292307281768
             id: 9036434808021
             sections: []

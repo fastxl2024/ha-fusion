@@ -107,7 +107,7 @@ views:
                     {% endif %}
               - id: 4998810301711
                 type: button
-                entity_id: sensor.udm_info
+                entity_id: sensor.udm_se_info
                 template:
                   state: |-
                     {% if is_state(entity_id, "true") %}

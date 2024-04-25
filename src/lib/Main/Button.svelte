@@ -184,7 +184,7 @@
 			openModal(() => import('$lib/Popups/Media_player.svelte'), {sel: sel});
 		} else if ((sel?.entity_id) === 'media_player.mass_zolderkamer') {
 			openModal(() => import('$lib/Popups/Media_player.svelte'), {sel: sel});
-		} else if ((sel?.entity_id) === 'sensor.udm_info') {
+		} else if ((sel?.entity_id) === 'sensor.udm_se_info') {
 			openModal(() => import('$lib/Popups/Ubiquiti.svelte'), {sel: sel});
 		} else {
 			switch (getDomain(sel?.entity_id)) {

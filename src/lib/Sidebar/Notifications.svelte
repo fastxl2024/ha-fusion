@@ -15,9 +15,18 @@
 	import { slide } from 'svelte/transition';
 	import Ripple from 'svelte-ripple';
 	import { marked } from 'marked';
+	import { Swipe, SwipeItem } from "svelte-swipe";
 
 	export let sel: any = undefined;
 	let expanded = false;
+
+	const swipeConfig = {
+  		autoplay: false,
+  		delay: 2000,
+  		showIndicators: true,
+		transitionDuration: 1000,
+  		defaultIndex: 0,
+	};
 
 	$: length = Object.entries($persistentNotifications)?.length;
 	$: empty = length < 1;
@@ -34,6 +43,13 @@
 			notification_id: key
 		});
 	}
+
+	function handleClick_install(key: string) {
+		callService($connection, 'update', 'install', {
+			entity_id: key
+		});
+	}
+
 
 	// modify markdown links
 	marked.setOptions({
@@ -55,7 +71,7 @@
 	});
 </script>
 
-{#if sel?.expand === false || (empty && $editMode)}
+{#if sel?.expand === false || (empty || $editMode)}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
@@ -102,15 +118,33 @@
 									{$timer && relativeTime(value?.created_at, $selectedLanguage)}
 								</div>
 							{/if}
-
-							<button
-								class="dismiss"
-								style:pointer-events={$editMode ? 'none' : 'unset'}
-								on:click={() => handleClick(key)}
-								use:Ripple={{ ...$ripple, color: 'rgba(0, 0, 0, 0.35)' }}
-							>
-								{$lang('notifications_dismiss')}
-							</button>
+							{#if value?.title.includes("update")}	
+								<button
+									class="dismiss"
+									style:pointer-events={$editMode ? 'none' : 'unset'}
+									on:click={() => handleClick_install(key)}
+									use:Ripple={{ ...$ripple, color: 'rgba(0, 0, 0, 0.35)' }}
+								>
+									Installeer
+								</button>							
+								<button
+									class="dismiss"
+									style:pointer-events={$editMode ? 'none' : 'unset'}
+									on:click={() => handleClick(key)}
+									use:Ripple={{ ...$ripple, color: 'rgba(0, 0, 0, 0.35)' }}
+								>
+									{$lang('notifications_dismiss')}
+								</button>
+							{:else}
+								<button
+									class="dismiss"
+									style:pointer-events={$editMode ? 'none' : 'unset'}
+									on:click={() => handleClick(key)}
+									use:Ripple={{ ...$ripple, color: 'rgba(0, 0, 0, 0.35)' }}
+								>
+									{$lang('notifications_dismiss')}
+								</button>
+							{/if}
 						</div>
 
 						<style>

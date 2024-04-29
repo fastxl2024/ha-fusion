@@ -4,7 +4,7 @@
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
 	import { getName } from '$lib/Utils';
 	import { getGraphEntity } from '$lib/Modal/getRandomEntity';
-	import Sonos_line_in_icon from '$lib/Images/sonos-line-in.jpeg'
+	import Sonos_line_in_icon from '$lib/Images/sonos-line-in.jpeg';
 
 	export let sel: any;
 
@@ -75,7 +75,7 @@
 	) {
 		backgroundImage = `url(${youtube_watching?.state?.replace('https://img.youtube.com', '')})`;
 	} else if (entity && entity?.attributes?.source === 'Line-in') {
-		backgroundImage = {Sonos_line_in_icon};		
+		backgroundImage = { Sonos_line_in_icon };
 	} else if (entity && entity?.attributes?.entity_picture) {
 		backgroundImage = `url("${entity?.attributes?.entity_picture.replace('w120-h120', 'w300')}")`;
 	} else if (!entity && sensor) {
@@ -84,93 +84,93 @@
 		backgroundImage = 'none';
 	}
 </script>
-{#if name === undefined}
-  
-{:else}
-<div
-	class="media-container"
-	style:background-image={backgroundImage}
-	style:height="calc({$itemHeight}px * 4 + 0.4rem * 3)"
->
-	{#if entity?.attributes?.app_id === 'com.google.ios.youtube' && backgroundImage === 'none'}
-		<div class="youtube-icon">
-			<Icon icon="logos:youtube-icon" height="auto" width="100%" />
-		</div>
-	{/if}
+
+{#if name === undefined}{:else}
 	<div
-		class="test"
-		style:background-color={backgroundImage === 'none' ? 'none' : 'rgba(0, 0, 0, 0.25)'}
-		style:backdrop-filter={backgroundImage === 'none' ? 'none' : 'blur(1rem)'}
-		style:-webkit-backdrop-filter={backgroundImage === 'none' ? 'none' : 'blur(1rem)'}
+		class="media-container"
+		style:background-image={backgroundImage}
+		style:height="calc({$itemHeight}px * 4 + 0.4rem * 3)"
 	>
-		<div class="left">
-			<div class="icon">
-				{#if entityIcon}
-					<Icon icon={entityIcon} height="auto" width="100%" />
-				{:else if entity?.entity_id}
-					<ComputeIcon entity_id={entity?.entity_id} />
-				{:else if sensorIcon}
-					<Icon icon={sensorIcon} height="auto" width="100%" />
-				{:else if sensor?.entity_id}
-					<ComputeIcon entity_id={sensor?.entity_id} />
+		{#if entity?.attributes?.app_id === 'com.google.ios.youtube' && backgroundImage === 'none'}
+			<div class="youtube-icon">
+				<Icon icon="logos:youtube-icon" height="auto" width="100%" />
+			</div>
+		{/if}
+		<div
+			class="test"
+			style:background-color={backgroundImage === 'none' ? 'none' : 'rgba(0, 0, 0, 0.25)'}
+			style:backdrop-filter={backgroundImage === 'none' ? 'none' : 'blur(1rem)'}
+			style:-webkit-backdrop-filter={backgroundImage === 'none' ? 'none' : 'blur(1rem)'}
+		>
+			<div class="left">
+				<div class="icon">
+					{#if entityIcon}
+						<Icon icon={entityIcon} height="auto" width="100%" />
+					{:else if entity?.entity_id}
+						<ComputeIcon entity_id={entity?.entity_id} />
+					{:else if sensorIcon}
+						<Icon icon={sensorIcon} height="auto" width="100%" />
+					{:else if sensor?.entity_id}
+						<ComputeIcon entity_id={sensor?.entity_id} />
+					{:else}
+						<Icon icon="ooui:help-ltr" height="auto" width="100%" />
+					{/if}
+				</div>
+			</div>
+
+			<div class="right">
+				{#if !entity && sensor}
+					<div class="name">
+						{name || $lang('unknown')}
+					</div>
+
+					<div class="state">
+						<div style="overflow: hidden; text-overflow: ellipsis;">
+							{sensor?.attributes?.data?.[1]?.title}
+
+							{#if sensor?.attributes?.data?.[1]?.aired}
+								({sensor?.attributes?.data?.[1]?.aired?.split('-')?.[0]})
+							{/if}
+						</div>
+					</div>
 				{:else}
-					<Icon icon="ooui:help-ltr" height="auto" width="100%" />
+					{@const media_artist = entity?.attributes?.media_artist}
+					{@const media_title = entity?.attributes?.media_title}
+					{@const media_content_type = entity?.attributes?.media_content_type}
+					{@const season = entity?.attributes?.media_season}
+					{@const episode = entity?.attributes?.media_episode}
+
+					<div class="name">
+						{name || $lang('unknown')}
+					</div>
+
+					<div class="state">
+						<div style="overflow: hidden; text-overflow: ellipsis;">
+							{#if media_content_type === 'tvshow'}
+								{entity?.attributes?.media_series_title} - S{season}E{episode} - {media_title}
+							{:else if media_artist && media_title}
+								<!-- ARTIST - TITLE -->
+
+								{media_artist} - {media_title}
+							{:else if media_artist && !media_title}
+								<!-- ARTIST -->
+
+								{media_artist}
+							{:else if !media_artist && media_title}
+								<!-- TITLE -->
+
+								{media_title}
+							{:else}
+								{$lang('unknown')}
+							{/if}
+						</div>
+					</div>
 				{/if}
 			</div>
 		</div>
-
-		<div class="right">
-			{#if !entity && sensor}
-				<div class="name">
-					{name || $lang('unknown')}
-				</div>
-
-				<div class="state">
-					<div style="overflow: hidden; text-overflow: ellipsis;">
-						{sensor?.attributes?.data?.[1]?.title}
-
-						{#if sensor?.attributes?.data?.[1]?.aired}
-							({sensor?.attributes?.data?.[1]?.aired?.split('-')?.[0]})
-						{/if}
-					</div>
-				</div>
-			{:else}
-				{@const media_artist = entity?.attributes?.media_artist}
-				{@const media_title = entity?.attributes?.media_title}
-				{@const media_content_type = entity?.attributes?.media_content_type}
-				{@const season = entity?.attributes?.media_season} 
-				{@const episode = entity?.attributes?.media_episode}
-
-				<div class="name">
-					{name || $lang('unknown')}
-				</div>
-
-				<div class="state">
-					<div style="overflow: hidden; text-overflow: ellipsis;">
-						{#if media_content_type === 'tvshow'}
-							{entity?.attributes?.media_series_title} - S{season}E{episode} - {media_title}
-						{:else if media_artist && media_title}
-							<!-- ARTIST - TITLE -->
-
-							{media_artist} - {media_title}
-						{:else if media_artist && !media_title}
-							<!-- ARTIST -->
-
-							{media_artist}
-						{:else if !media_artist && media_title}
-							<!-- TITLE -->
-
-							{media_title}
-						{:else}
-							{$lang('unknown')}
-						{/if}
-					</div>
-				</div>
-			{/if}
-		</div>
 	</div>
-</div>
 {/if}
+
 <style>
 	.youtube-icon {
 		width: 20%;

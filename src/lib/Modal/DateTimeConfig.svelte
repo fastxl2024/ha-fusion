@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { dashboard, lang, record, ripple } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
-	import TimeDate from '$lib/Sidebar/DateTime.svelte';	
+	import TimeDate from '$lib/Sidebar/DateTime.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
 	import Ripple from 'svelte-ripple';
@@ -26,7 +26,14 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div class="preview">
-			<TimeDate seconds={sel?.seconds} hour12={sel?.hour12} short_day={sel?.short_day} short_month={sel?.short_month} year={sel?.year} hide={sel?.hide}/>
+			<TimeDate
+				seconds={sel?.seconds}
+				hour12={sel?.hour12}
+				short_day={sel?.short_day}
+				short_month={sel?.short_month}
+				year={sel?.year}
+				hide={sel?.hide}
+			/>
 		</div>
 
 		<h2>{$lang('time_format_header')}</h2>
@@ -105,24 +112,16 @@
 			>
 				{$lang('min')}
 			</button>
-		</div>	
+		</div>
 
 		<!-- YEAR -->
 		<h2>{$lang('year')}</h2>
 		<div class="button-container">
-			<button
-				class:selected={!sel?.year}
-				on:click={() => set('year', false)}
-				use:Ripple={$ripple}
-			>
+			<button class:selected={!sel?.year} on:click={() => set('year', false)} use:Ripple={$ripple}>
 				{$lang('no')}
 			</button>
 
-			<button
-				class:selected={sel?.year}
-				on:click={() => set('year', true)}
-				use:Ripple={$ripple}
-			>
+			<button class:selected={sel?.year} on:click={() => set('year', true)} use:Ripple={$ripple}>
 				{$lang('yes')}
 			</button>
 		</div>
@@ -151,7 +150,7 @@
 			>
 				{$lang('month')}
 			</button>
-		</div>		
+		</div>
 
 		<ConfigButtons {sel} />
 	</Modal>

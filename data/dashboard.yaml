@@ -45,7 +45,7 @@ views:
                 name: CV Ketel
                 template:
                   icon: |-
-                    {% if states(entity_id) | float(0) > 10  %}
+                    {% if is_state(entity_id, "heat") %}
                       material-symbols:mode-heat
                     {% else %}
                       material-symbols:mode-heat-off
@@ -114,6 +114,12 @@ views:
                       Online
                     {% else %}
                       Offline
+                    {% endif %}
+                  icon: |-
+                    {% if is_state(entity_id, "true") %}
+                      ph:network-light
+                    {% else %}
+                      ph:network-slash-light
                     {% endif %}
                 name: Netwerk
             id: 4931844050329
@@ -285,7 +291,7 @@ views:
                      Aan - {{states('sensor.vaatwasser_power', with_unit=True)}} 
                     {%- else -%}
                      Uit
-                    {%- endif -%} 
+                    {%- endif -%}
                 icon: fluent:dishwasher-32-filled
                 name: Vaatwasser
               - type: button
@@ -297,13 +303,13 @@ views:
                      Opwarmen - {{states('sensor.quooker_power', with_unit=True)}} 
                     {%- else -%}
                      Uit
-                    {%- endif -%} 
+                    {%- endif -%}
                   color: |-
                     {% if states('sensor.quooker_stroom') | float > 5 -%}
                       darkred 
                     {%- else -%}
                        
-                    {%- endif -%} 
+                    {%- endif -%}
                   icon: fa6-solid:faucet-drip
                 name: Quooker
               - id: 5555453503166
@@ -316,13 +322,13 @@ views:
                      Wassen - {{states('sensor.wasmachine_power', with_unit=True)}} 
                     {%- else -%}
                      Uit
-                    {%- endif -%} 
+                    {%- endif -%}
                   icon: |-
-                    {% if states('sensor.wasmachine_stroom') | float > 5 -%}
+                    {% if states('sensor.wasmachine_power') | float > 5 -%}
                       mdi:washer
                     {%- else -%}
                        mdi:washer-off
-                    {%- endif -%} 
+                    {%- endif -%}
                 more_info: false
               - id: 2389316581823
                 type: button
@@ -337,11 +343,11 @@ views:
                     {%- endif -%}
                   background: red
                   icon: |-
-                    {% if states('sensor.wasdroger_stroom') | float > 5 -%}
+                    {% if states('sensor.wasdroger_power') | float > 5 -%}
                       mdi:tumble-dryer
                     {%- else -%}
                       mdi:tumble-dryer-off
-                    {%- endif -%} 
+                    {%- endif -%}
                 more_info: false
             id: 2112371945518
         id: 7143594729093
@@ -356,19 +362,9 @@ views:
                 marquee: true
                 name: TV
               - type: button
-                id: 2824275586095
-                entity_id: media_player.coreelec
-                marquee: true
-              - type: button
                 id: 8862914118626
                 entity_id: media_player.sonos_woonkamer
                 marquee: true
-              - id: 4193383206966
-                type: button
-                entity_id: media_player.plex_woonkamer
-                name: Plex
-                marquee: true
-                icon: cbi:plex
               - id: 9008800144520
                 type: button
                 entity_id: media_player.mass_woonkamer
@@ -771,7 +767,7 @@ views:
                      Aan - {{states('sensor.lg_monitor_groot_power', with_unit=True)}} 
                     {%- else -%}
                      Uit
-                    {%- endif -%} 
+                    {%- endif -%}
                 more_info: false
               - id: 1394544171955
                 type: button
@@ -783,8 +779,19 @@ views:
                      Aan - {{states('sensor.docking_station_power', with_unit=True)}}
                     {%- else -%}
                      Uit
-                    {%- endif -%} 
+                    {%- endif -%}
                 icon: carbon:laptop
+              - id: 6007091981759
+                type: button
+                entity_id: binary_sensor.node_proxmox_status
+                name: Proxmox
+                template:
+                  icon: |-
+                    {% if is_state(entity_id, "on") %}
+                      mdi:server-network
+                    {% else %}
+                      mdi:server-network-off
+                    {% endif %}
             id: 7778855310678
             sections: []
         id: 3736816756261

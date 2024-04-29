@@ -15,17 +15,17 @@
 	import { slide } from 'svelte/transition';
 	import Ripple from 'svelte-ripple';
 	import { marked } from 'marked';
-	import { Swipe, SwipeItem } from "svelte-swipe";
+	import { Swipe, SwipeItem } from 'svelte-swipe';
 
 	export let sel: any = undefined;
 	let expanded = false;
 
 	const swipeConfig = {
-  		autoplay: false,
-  		delay: 2000,
-  		showIndicators: true,
+		autoplay: false,
+		delay: 2000,
+		showIndicators: true,
 		transitionDuration: 1000,
-  		defaultIndex: 0,
+		defaultIndex: 0
 	};
 
 	$: length = Object.entries($persistentNotifications)?.length;
@@ -50,7 +50,6 @@
 		});
 	}
 
-
 	// modify markdown links
 	marked.setOptions({
 		renderer: (() => {
@@ -71,7 +70,7 @@
 	});
 </script>
 
-{#if sel?.expand === false || (empty || $editMode)}
+{#if sel?.expand === false || empty || $editMode}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
@@ -118,7 +117,7 @@
 									{$timer && relativeTime(value?.created_at, $selectedLanguage)}
 								</div>
 							{/if}
-							{#if value?.title.includes("update")}	
+							{#if value?.title.includes('update')}
 								<button
 									class="dismiss"
 									style:pointer-events={$editMode ? 'none' : 'unset'}
@@ -126,7 +125,7 @@
 									use:Ripple={{ ...$ripple, color: 'rgba(0, 0, 0, 0.35)' }}
 								>
 									Installeer
-								</button>							
+								</button>
 								<button
 									class="dismiss"
 									style:pointer-events={$editMode ? 'none' : 'unset'}
@@ -160,7 +159,7 @@
 							}
 						</style>
 					</div>
-				</div>							
+				</div>
 			{/each}
 		</div>
 	</div>

@@ -1,4 +1,3 @@
-@ -0,0 +1,363 @@
 <script lang="ts">
 	import { states, connection, lang, ripple } from '$lib/Stores';
 	import { onMount, onDestroy } from 'svelte';
@@ -8,12 +7,12 @@
 	import Icon from '@iconify/svelte';
 	import Modal from '$lib/Modal/Index.svelte';
 	import { getName } from '$lib/Utils';
-	import Sonos_line_in_icon from '$lib/Images/sonos-line-in.jpeg'
-	import { Swipe, SwipeItem } from "svelte-swipe";
+	import Sonos_line_in_icon from '$lib/Images/sonos-line-in.jpeg';
+	import { Swipe, SwipeItem } from 'svelte-swipe';
 
 	export let isOpen: boolean;
 	export let sel: any;
-	
+
 	let attributes: any;
 	let interval: ReturnType<typeof setInterval>;
 	let tick = Date.now();
@@ -32,14 +31,14 @@
 	$: updated_at = new Date(attributes?.media_position_updated_at).getTime();
 	$: diff = (tick - updated_at) / 1000;
 	$: position = attributes?.media_position + (playing ? diff : 0);
-	
+
 	const swipeConfig = {
-    	autoplay: false,
-    	delay: 2000,
-    	showIndicators: true,
-    	transitionDuration: 1000,
-    	defaultIndex: 0,
-  	};
+		autoplay: false,
+		delay: 2000,
+		showIndicators: true,
+		transitionDuration: 1000,
+		defaultIndex: 0
+	};
 
 	const DEBOUNCE_INTERVAL = 2500;
 
@@ -101,22 +100,22 @@
 
 	function handleClick(service: string) {
 		callService($connection, 'media_player', service, {
-			entity_id: (entity_id)
+			entity_id: entity_id
 		});
-	function handleClick1(service: string) {
-		callService($connection, 'media_player', service, {
-			entity_id: (entity_id)
-		});
-	}		
+		function handleClick1(service: string) {
+			callService($connection, 'media_player', service, {
+				entity_id: entity_id
+			});
+		}
 	}
 
-//	function handleClickfavorite(favorite: string) {
-//		callService($connection, 'media_player', 'play_media', {
-//			entity_id: (sel, entity_id),
-//			media_content_type: 'favorite_item_id',
-//			media_content_id: favorite
-//		});
-//	}
+	//	function handleClickfavorite(favorite: string) {
+	//		callService($connection, 'media_player', 'play_media', {
+	//			entity_id: (sel, entity_id),
+	//			media_content_type: 'favorite_item_id',
+	//			media_content_id: favorite
+	//		});
+	//	}
 
 	function convertToHMS(seconds: number) {
 		if (seconds) {
@@ -131,10 +130,11 @@
 	}
 </script>
 
+@ -0,0 +1,363 @@
 {#if isOpen}
 	<Modal>
 		<h1 slot="title">{getName(sel, entity)}</h1>
-		<h2>						
+		<h2>
 			{#if attributes?.media_artist}
 				{attributes?.media_artist}
 			{/if}
@@ -147,15 +147,15 @@
 				{attributes?.media_title}
 			{/if}
 			{#if attributes?.media_album_name}
-				<br>Album: {attributes?.media_album_name}
+				<br />Album: {attributes?.media_album_name}
 			{/if}
 		</h2>
 		<div class="swipe-holder">
 			<Swipe {...swipeConfig}>
-				<SwipeItem>	
+				<SwipeItem>
 					{#if attributes?.media_artist || attributes?.media_title}
 						{#if attributes.media_title === 'Line-in'}
-							<img src={Sonos_line_in_icon}/>
+							<img src={Sonos_line_in_icon} />
 						{/if}
 						{#if attributes?.entity_picture}
 							<img src={attributes?.entity_picture} alt={attributes?.media_title} />
@@ -190,21 +190,21 @@
 								}
 							}}
 						/>
-						
-						<br />	
+
+						<br />
 					{/if}
 				</SwipeItem>
 				<SwipeItem>
-					<div class="vol-container">	
+					<div class="vol-container">
 						<!-- volume_up -->
 						<button on:click={() => handleClick('volume_up')} use:Ripple={$ripple}>
 							<div style="scale: 90%; margin-bottom: -0.2rem;">
 								<Icon icon="typcn:plus" height="none" />
 							</div>
 						</button>
-					</div>   
+					</div>
 				</SwipeItem>
-		</Swipe>
+			</Swipe>
 		</div>
 		<div class="icon-container">
 			<!-- previous -->
@@ -246,14 +246,14 @@
 
 		{$lang('volume_level')}
 
-		<div class="vol-container">	
+		<div class="vol-container">
 			<!-- volume_up -->
 			<button on:click={() => handleClick('volume_up')} use:Ripple={$ripple}>
 				<div style="scale: 90%; margin-bottom: -0.2rem;">
 					<Icon icon="typcn:plus" height="none" />
 				</div>
 			</button>
-			
+
 			<!-- vol text -->
 			<div>VOL</div>
 
@@ -268,18 +268,18 @@
 					<Icon icon="typcn:minus" height="none" />
 				</div>
 			</button>
-		</div>   
+		</div>
 	</Modal>
 {/if}
 
 <style>
 	:global(::-webkit-scrollbar) {
-  	width: 0.25rem;
+		width: 0.25rem;
 	}
 
-    .swipe-holder{
-      height: 90vh;
-    }
+	.swipe-holder {
+		height: 90vh;
+	}
 
 	.time-container {
 		display: flex;

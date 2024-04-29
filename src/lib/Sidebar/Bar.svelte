@@ -11,7 +11,7 @@
 
 	let entity: HassEntity;
 	let cache: { [id: number]: { [key: string]: number } } = {};
-	let expression = 0;
+	let expression = 1;
 	let mounted: boolean;
 
 	const options = {

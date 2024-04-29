@@ -17,7 +17,7 @@
 	<Modal>
 		<h1 slot="title">
 			<img
-				src="https://www.solaredge.com/nl/sites/nl/files/SolarEdge_logo_header_new_0.svg"
+				src="https://rituals.scene7.com/is/content/rituals/rituals-logo-vector-square-01?fmt=webp-alpha&resMode=sharp2&wid=113"
 				alt="test"
 				style="max-width:120px; top:20px"
 			/>

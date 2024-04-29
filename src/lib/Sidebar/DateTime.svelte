@@ -6,16 +6,16 @@
 	export let short_day: boolean | undefined = undefined;
 	export let short_month: boolean | undefined = undefined;
 	export let year: boolean | undefined = undefined;
-	export let hide: string | undefined = undefined;	
+	export let hide: string | undefined = undefined;
 
 	$: time = $timer.toLocaleTimeString($selectedLanguage, {
 		hour: hour12 ? 'numeric' : '2-digit',
 		minute: '2-digit',
 		second: seconds ? '2-digit' : undefined,
-		hour12: hour12 === undefined ? false : hour12	
+		hour12: hour12 === undefined ? false : hour12
 	});
 	$: weekDay = $timer.toLocaleDateString($selectedLanguage, {
-	    weekday: short_day ? 'short' : 'long'
+		weekday: short_day ? 'short' : 'long'
 	});
 	$: shortDate = $timer.toLocaleDateString($selectedLanguage, {
 		day: 'numeric',
@@ -24,9 +24,7 @@
 	});
 </script>
 
-<div
-	class="container"
->
+<div class="container">
 	<div class="date">
 		{#if hide !== 'day'}
 			{weekDay}<br />
@@ -40,8 +38,7 @@
 	<div class="time">
 		{time}
 	</div>
-</div>	
-
+</div>
 
 <style>
 	.container {
@@ -50,8 +47,7 @@
 		pointer-events: none;
 		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 		grid-template-columns: auto auto;
-		grid-template-areas: 
-    		"a b";		
+		grid-template-areas: 'a b';
 		/* need to specify to properly show emoji */
 		font-family: 'Inter Variable';
 		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
@@ -77,10 +73,9 @@
 		text-overflow: ellipsis;
 		margin-left: -0.1rem;
 		grid-area: b;
-	}	
+	}
 
 	div::first-letter {
 		text-transform: capitalize;
 	}
 </style>
-

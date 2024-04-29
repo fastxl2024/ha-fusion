@@ -24,28 +24,41 @@
 	$: media_series_title = attributes?.media_series_title;
 
 	import { onMount, onDestroy } from 'svelte';
-  
-  	let value = 'Value 1'; // Initial value
+
+	let value = 'Value 1'; // Initial value
 	let value_solar_now_and_day = 'Value Solar Now and Day';
-  
-  	const switchValues = () => {
-    	//value = value === attributes?.hvac_action ? attributes?.temperature + " ˚C" + " / "+ attributes?.current_temperature + " ˚C" : attributes?.hvac_action; // Switch between two values
-		value = value === attributes?.hvac_action ? attributes?.temperature + " ˚C" + " / "+ attributes?.current_temperature + " ˚C" : attributes?.hvac_action; // Switch between two values
-		value_solar_now_and_day = value_solar_now_and_day === 'Vandaag: ' + $states?.['sensor.solaredge_energy_today']?.state + ' W'? 'Huidig: ' + $states?.['sensor.solaredge_ac_power']?.state + ' W' : 'Vandaag: ' + $states?.['sensor.solaredge_energy_today']?.state + ' W';
+	let value_energy_now_and_day = 'Value Energy Now and Day';
 
-    	setTimeout(switchValues, 2000); // Schedule the next switch after 3 seconds
-  	};	
-  
-  	onMount(() => {
-    	// Start switching values when the component is mounted
-    	switchValues();
- 	});
-  
-  	onDestroy(() => {
-    	// Stop switching values when the component is destroyed
-    	clearTimeout(switchValues);
-  	});	
+	const switchValues = () => {
+		//value = value === attributes?.hvac_action ? attributes?.temperature + " ˚C" + " / "+ attributes?.current_temperature + " ˚C" : attributes?.hvac_action; // Switch between two values
+		value =
+			value === attributes?.hvac_action
+				? attributes?.temperature + ' ˚C' + ' / ' + attributes?.current_temperature + ' ˚C'
+				: attributes?.hvac_action; // Switch between two values
+		value_solar_now_and_day =
+			value_solar_now_and_day ===
+			'Vandaag: ' + $states?.['sensor.solaredge_energy_today']?.state + ' W'
+				? 'Huidig: ' + $states?.['sensor.solaredge_ac_power']?.state + ' W'
+				: 'Vandaag: ' + $states?.['sensor.solaredge_energy_today']?.state + ' W';
+		value_energy_now_and_day =
+			value_energy_now_and_day === 			
+			'Vandaag: ' + $states?.['sensor.dsmr_day_consumption_electricity_merged']?.state + ' kWh'
+				? 'Huidig: ' + $states?.['sensor.dsmr_reading_electricity_currently_delivered']?.state + ' kW'
+				: 'Vandaag: ' + $states?.['sensor.dsmr_day_consumption_electricity_merged']?.state + ' kWh';
 
+
+		setTimeout(switchValues, 2000); // Schedule the next switch after 3 seconds
+	};
+
+	onMount(() => {
+		// Start switching values when the component is mounted
+		switchValues();
+	});
+
+	onDestroy(() => {
+		// Stop switching values when the component is destroyed
+		clearTimeout(switchValues);
+	});
 </script>
 
 <!-- Light -->
@@ -61,8 +74,7 @@
 {:else if state === 'playing' && attributes?.media_content_id.includes(':8097/')}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}
 	{#if selected?.marquee === true && contentWidth && contentWidth > 153 && !$editMode}
-		{#await import('$lib/Components/Marquee.svelte')}
-		{:then Marquee}
+		{#await import('$lib/Components/Marquee.svelte') then Marquee}
 			<svelte:component this={Marquee.default}>
 				{@html 'Music Assistant'}
 				{@html '&nbsp;'.repeat(4)}
@@ -71,7 +83,6 @@
 	{:else}
 		{@html 'Music Assistant'}
 	{/if}
-	
 {:else if media_artist && media_title && state === 'playing'}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}
 	{@const artist = `<span title=${media_artist}>${media_artist}</span>`}
@@ -85,30 +96,26 @@
 			</svelte:component>
 		{/await}
 	{:else}
-		{@html artist + ' - ' + title }
+		{@html artist + ' - ' + title}
 	{/if}
-
 {:else if media_content_type === 'tvshow' && media_season && media_episode && state === 'playing'}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}
 	{@const season = `<span title=${media_season}>${media_season}</span>`}
 	{@const episode = `<span title=${media_episode}>${media_episode}</span>`}
 	{@const serie = `<span title=${media_series_title}>${media_series_title}</span>`}
 
-
 	{#if selected?.marquee === true && contentWidth && contentWidth > 153 && !$editMode}
 		{#await import('$lib/Components/Marquee.svelte')}
 			{@html title}
 		{:then Marquee}
 			<svelte:component this={Marquee.default}>
-				{@html serie + ' - ' + 'S'+ season + 'E' + episode + ' - ' + title }
+				{@html serie + ' - ' + 'S' + season + 'E' + episode + ' - ' + title}
 				{@html '&nbsp;'.repeat(4)}
 			</svelte:component>
 		{/await}
 	{:else}
-		{@html serie + ' - ' + 'S'+ season + 'E' + episode + ' - ' + title }
+		{@html serie + ' - ' + 'S' + season + 'E' + episode + ' - ' + title}
 	{/if}
-
-
 {:else if media_title && state === 'playing'}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}
 	{#if selected?.marquee === true && contentWidth && contentWidth > 153 && !$editMode}
@@ -126,7 +133,7 @@
 
 	<!--  Climate -->
 {:else if getDomain(entity_id) === 'climate' && attributes?.hvac_action}
-    {#if attributes?.hvac_action === 'off'}
+	{#if attributes?.hvac_action === 'off'}
 		{$lang(attributes?.hvac_action)}
 	{:else}
 		{$lang(value)}
@@ -184,12 +191,12 @@
 	{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(percentage * 0.01)}
 
 	<!--  Door/window -->
-{:else if getDomain(entity_id) === 'binary_sensor' && attributes?.device_class === 'door'|| attributes?.device_class === 'window' }
+{:else if (getDomain(entity_id) === 'binary_sensor' && attributes?.device_class === 'door') || attributes?.device_class === 'window'}
 	{#if state === 'on'}
 		{$lang('open')}
 	{:else}
 		{$lang('closed')}
-	{/if}	
+	{/if}
 
 	<!-- Solar/system -->
 {:else if entity_id === 'sensor.solaredge_energy_today'}
@@ -198,7 +205,11 @@
 	{:else}
 		Vandaag: {state} W
 	{/if}
-		
+
+	<!-- Energy usage -->
+{:else if entity_id === 'sensor.dsmr_day_consumption_electricity_merged'}
+		{value_energy_now_and_day}
+
 	<!-- State  -->
 {:else if state}
 	{#if selected?.marquee && contentWidth && contentWidth > 153 && !$editMode}

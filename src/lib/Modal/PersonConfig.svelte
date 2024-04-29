@@ -22,8 +22,8 @@
 		set('entity_id', demo);
 		set('entity_id_2', demo);
 	}
-//	let battery_level_sensor_icon: string | undefined = sel?.battery_level_sensor_icon;
-//	let battery_level_sensor: string | undefined = sel?.battery_level_sensor;
+	//	let battery_level_sensor_icon: string | undefined = sel?.battery_level_sensor_icon;
+	//	let battery_level_sensor: string | undefined = sel?.battery_level_sensor;
 
 	const iconOptions = [{ id: 'meteocons', name: 'meteocons' }];
 
@@ -35,7 +35,7 @@
 	$: sensorStates = Object.keys($states)
 		.filter((key) => key.startsWith('sensor.'))
 		.sort()
-		.map((key) => ({ id: key, label: key }));		
+		.map((key) => ({ id: key, label: key }));
 
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);
@@ -52,12 +52,12 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div class="preview">
-			<Person 
+			<Person
 				entity_id={sel?.entity_id}
 				battery_level_sensor={sel?.battery_level_sensor}
 				entity_id_2={sel?.entity_id_2}
 				battery_level_sensor_2={sel?.battery_level_sensor_2}
-			/>	
+			/>
 		</div>
 
 		<h2>{$lang('entity')} {$lang('person')} 1</h2>
@@ -94,8 +94,8 @@
 				value={sel?.entity_id_2}
 				on:change={(event) => set('entity_id_2', event)}
 			/>
-		{/if}					
-		<h2>{$lang('battery_level')} {$lang('person')} 2</h2>	
+		{/if}
+		<h2>{$lang('battery_level')} {$lang('person')} 2</h2>
 
 		{#if sensorStates}
 			<Select

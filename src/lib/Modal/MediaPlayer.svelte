@@ -15,8 +15,6 @@
 	export let isOpen: boolean;
 	export let selected: any;
 
-
-	
 	let attributes: any;
 	let interval: ReturnType<typeof setInterval>;
 	let tick = Date.now();
@@ -34,7 +32,7 @@
 	$: updated_at = new Date(attributes?.media_position_updated_at).getTime();
 	$: diff = (tick - updated_at) / 1000;
 	$: position = attributes?.media_position + (playing ? diff : 0);
-	$: season = attributes?.media_season; 
+	$: season = attributes?.media_season;
 	$: episode = attributes?.media_episode;
 
 	const DEBOUNCE_INTERVAL = 2500;
@@ -122,15 +120,15 @@
 			{#if attributes?.media_content_type === 'tvshow'}
 				{attributes?.media_series_title} - S{season}E{episode} - {attributes?.media_title}
 				{#if attributes?.media_summary}
-				<br><br>{attributes?.media_summary}
+					<br /><br />{attributes?.media_summary}
 				{/if}
 			{/if}
 			{#if attributes?.media_content_type === 'movie'}
 				{attributes?.media_title}
 				{#if attributes?.media_summary}
-				<br><br>{attributes?.media_summary}
+					<br /><br />{attributes?.media_summary}
 				{/if}
-			{/if}						
+			{/if}
 			{#if attributes?.media_artist}
 				{attributes?.media_artist}
 			{/if}
@@ -143,7 +141,7 @@
 				{attributes?.media_title}
 			{/if}
 			{#if attributes?.media_album_name}
-				<br>Album: {attributes?.media_album_name}
+				<br />Album: {attributes?.media_album_name}
 			{/if}
 		</h2>
 
@@ -228,14 +226,14 @@
 
 		{$lang('volume_level')}
 
-		<div class="vol-container">	
+		<div class="vol-container">
 			<!-- volume_up -->
 			<button on:click={() => handleClick('volume_up')} use:Ripple={$ripple}>
 				<div style="scale: 90%; margin-bottom: -0.2rem;">
 					<Icon icon="typcn:plus" height="none" />
 				</div>
 			</button>
-			
+
 			<!-- vol text -->
 			<div>VOL</div>
 

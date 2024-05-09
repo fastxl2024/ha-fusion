@@ -121,6 +121,12 @@ views:
                     {% else %}
                       ph:network-slash-light
                     {% endif %}
+                  color: |-
+                    {% if is_state(entity_id, "true") %}
+                      green
+                    {% else %}
+                      red
+                    {% endif %}
                 name: Netwerk
             id: 4931844050329
             sections: []
@@ -272,6 +278,15 @@ views:
                 id: 2042197139103
                 entity_id: climate.airco_woonkamer
                 name: Airco
+              - id: 3789591612085
+                type: button
+                entity_id: sensor.woonkamer_humidity
+                name: Klimaat
+                template:
+                  state: >
+                    {{states('sensor.woonkamer_temperature', with_unit=True)}} /
+                    {{ states(entity_id, with_unit=True) }}
+                more_info: false
             id: 7258073665670
             sections: []
           - name: Overig
@@ -477,6 +492,10 @@ views:
                 id: 8602667084118
                 entity_id: light.lamp_slaapkamer_evi
                 name: Lamp
+              - id: 8308172857708
+                type: button
+                entity_id: sensor.slaapkamer_evi_humidity
+                icon: mdi:home-climate-outline
             id: 1766992310119
             sections: []
           - name: Slaapkamer Nova
@@ -715,6 +734,22 @@ views:
             sections: []
         id: 5752835037941
         items: []
+      - name: Verwarming
+        items:
+          - type: button
+            id: 6822463192719
+            entity_id: climate.eurom_alutherm_zolder
+            name: Verwarming
+          - id: 6525232107385
+            type: button
+            entity_id: sensor.zolderkamer_humidity
+            icon: mdi:home-climate-outline
+            template:
+              state: >
+                {{states('sensor.zolderkamer_temperature', with_unit=True)}} /
+                {{ states(entity_id, with_unit=True) }}
+            name: Klimaat
+        id: 4952682388198
       - type: horizontal-stack
         sections:
           - name: Verlichting
@@ -731,10 +766,6 @@ views:
             sections: []
           - name: Apparaten
             items:
-              - type: button
-                id: 6822463192719
-                entity_id: climate.eurom_alutherm_zolder
-                name: Verwarming
               - type: button
                 id: 4986803267808
                 entity_id: binary_sensor.nest_protect_office_smoke_status
@@ -792,6 +823,10 @@ views:
                     {% else %}
                       mdi:server-network-off
                     {% endif %}
+              - id: 2196291256570
+                type: button
+                entity_id: switch.printer
+                icon: iconamoon:printer-thin
             id: 7778855310678
             sections: []
         id: 3736816756261

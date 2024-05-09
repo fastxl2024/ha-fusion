@@ -102,20 +102,20 @@
 		callService($connection, 'media_player', service, {
 			entity_id: entity_id
 		});
-		function handleClick1(service: string) {
-			callService($connection, 'media_player', service, {
-				entity_id: entity_id
-			});
-		}
 	}
+	function handleClick1(service: string) {
+			callService($connection, 'media_player', service, {
+				entity_id: 'media_player.sonos_zolderkamer'
+			});
+	}	
 
-	//	function handleClickfavorite(favorite: string) {
-	//		callService($connection, 'media_player', 'play_media', {
-	//			entity_id: (sel, entity_id),
-	//			media_content_type: 'favorite_item_id',
-	//			media_content_id: favorite
-	//		});
-	//	}
+	function handleClickfavorite(favorite: string) {
+		callService($connection, 'media_player', 'play_media', {
+		entity_id: 'media_player.sonos_zolderkamer',
+		media_content_type: 'favorite_item_id',
+		media_content_id: favorite
+		});
+	}
 
 	function convertToHMS(seconds: number) {
 		if (seconds) {
@@ -133,7 +133,7 @@
 @ -0,0 +1,363 @@
 {#if isOpen}
 	<Modal>
-		<h1 slot="title">{getName(sel, entity)}</h1>
+		<h1 slot="title">{getName(sel, entity)}</h1>		
 		<h2>
 			{#if attributes?.media_artist}
 				{attributes?.media_artist}
@@ -152,7 +152,7 @@
 		</h2>
 		<div class="swipe-holder">
 			<Swipe {...swipeConfig}>
-				<SwipeItem>
+				<SwipeItem>		
 					{#if attributes?.media_artist || attributes?.media_title}
 						{#if attributes.media_title === 'Line-in'}
 							<img src={Sonos_line_in_icon} />
@@ -190,22 +190,30 @@
 								}
 							}}
 						/>
-
 						<br />
 					{/if}
 				</SwipeItem>
+
 				<SwipeItem>
+					<script>
+						function handleClick1(service: string) {
+							callService($connection, 'media_player', service, {
+							entity_id: 'media_player.sonos_zolderkamer'
+							});
+						}			
+					</script>
 					<div class="vol-container">
 						<!-- volume_up -->
-						<button on:click={() => handleClick('volume_up')} use:Ripple={$ripple}>
+						<button on:click={() => handleClick1('volume_up')} use:Ripple={$ripple}>
 							<div style="scale: 90%; margin-bottom: -0.2rem;">
 								<Icon icon="typcn:plus" height="none" />
 							</div>
 						</button>
 					</div>
 				</SwipeItem>
+					
 			</Swipe>
-		</div>
+		</div>								
 		<div class="icon-container">
 			<!-- previous -->
 			<button
@@ -240,8 +248,8 @@
 			<!-- next -->
 			<button on:click={() => handleClick('media_next_track')} use:Ripple={$ripple}>
 				<Icon icon="ic:round-fast-forward" height="none" />
-			</button>
-		</div>
+			</button>	
+		</div>		
 		<br />
 
 		{$lang('volume_level')}
@@ -278,8 +286,16 @@
 	}
 
 	.swipe-holder {
-		height: 90vh;
-	}
+		height: 60vh;
+		width: 101%;
+	}		
+	:root{
+    	--sv-swipe-panel-height: inherit;
+    	--sv-swipe-panel-width: inherit;
+    	--sv-swipe-panel-wrapper-index: 2;
+    	--sv-swipe-indicator-active-color: blue;
+    	--sv-swipe-handler-top: 0px;
+  	}		
 
 	.time-container {
 		display: flex;

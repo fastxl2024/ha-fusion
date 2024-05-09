@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { editMode } from '$lib/Stores';
+	import { states, editMode } from '$lib/Stores';
 	import DragIndicator from '$lib/Main/DragIndicator.svelte';
 	import DeleteButton from '$lib/Main/DeleteButton.svelte';
 	import SectionTitle from '$lib/Main/SectionTitle.svelte';
@@ -14,6 +14,8 @@
 			<SectionTitle bind:value={section.name} />
 		{:else if section?.name === ''}
 			{@html '&nbsp;'}
+<!--		{:else if section?.name === 'Verlichting'}
+			{$states?.['media_player.sonos_zolderkamer']?.attributes.source_list}-->
 		{:else}
 			{section?.name}
 		{/if}

@@ -41,11 +41,12 @@
 				? 'Huidig: ' + $states?.['sensor.solaredge_ac_power']?.state + ' W'
 				: 'Vandaag: ' + $states?.['sensor.solaredge_energy_today']?.state + ' W';
 		value_energy_now_and_day =
-			value_energy_now_and_day === 			
+			value_energy_now_and_day ===
 			'Vandaag: ' + $states?.['sensor.dsmr_day_consumption_electricity_merged']?.state + ' kWh'
-				? 'Huidig: ' + $states?.['sensor.dsmr_reading_electricity_currently_delivered']?.state + ' kW'
+				? 'Huidig: ' +
+					$states?.['sensor.dsmr_reading_electricity_currently_delivered']?.state +
+					' kW'
 				: 'Vandaag: ' + $states?.['sensor.dsmr_day_consumption_electricity_merged']?.state + ' kWh';
-
 
 		setTimeout(switchValues, 2000); // Schedule the next switch after 3 seconds
 	};
@@ -208,7 +209,7 @@
 
 	<!-- Energy usage -->
 {:else if entity_id === 'sensor.dsmr_day_consumption_electricity_merged'}
-		{value_energy_now_and_day}
+	{value_energy_now_and_day}
 
 	<!-- State  -->
 {:else if state}

@@ -714,7 +714,12 @@ views:
                   service: |-
                     service: media_player.media_play_pause
                     data: {}
-                  icon: https://avatars.githubusercontent.com/u/71128003?s=200&v=4
+                  icon: |-
+                    {% if is_state(entity_id, "playing") %}
+                      
+                    {% else %}
+                      https://avatars.githubusercontent.com/u/71128003?s=200&v=4
+                    {% endif %}
             sections: []
             id: 6436456471203
           - name: ''
@@ -789,13 +794,13 @@ views:
                     {% endif %}
               - type: button
                 id: 5197655452606
-                entity_id: switch.lg_monitor_groot
-                name: Monitor
+                entity_id: switch.monitoren
+                name: Monitoren
                 icon: carbon:screen
                 template:
                   state: |-
                     {% if is_state(entity_id, 'on') -%}
-                     Aan - {{states('sensor.lg_monitor_groot_power', with_unit=True)}} 
+                     Aan - {{ states('sensor.lg_monitor_groot_power') | float(0) | round(0) + states('sensor.lg_monitor_groot_power') | float(0) | round(0) }}  W
                     {%- else -%}
                      Uit
                     {%- endif -%}

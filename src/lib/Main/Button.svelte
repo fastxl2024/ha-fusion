@@ -178,22 +178,22 @@
 			});
 		} else if (more_info === false) {
 			toggle();
-		} else if (sel?.entity_id === 'sensor.solaredge_energy_today') {
-			openModal(() => import('$lib/Popups/Solar.svelte'), { sel: sel });
-		} else if (sel?.entity_id === 'media_player.sonos_zolderkamer') {
-			openModal(() => import('$lib/Popups/Sonos_zolderkamer.svelte'), { sel: sel });
-		} else if (sel?.entity_id === 'media_player.mass_zolderkamer') {
-			openModal(() => import('$lib/Popups/Media_player.svelte'), { sel: sel });
-		} else if (sel?.entity_id === 'sensor.udm_se_info') {
-			openModal(() => import('$lib/Popups/Ubiquiti.svelte'), { sel: sel });
+//		} else if (sel?.entity_id === 'sensor.solaredge_energy_today') {
+//			openModal(() => import('$lib/Popups/Solar.svelte'), { sel: sel });
+//		} else if (sel?.entity_id === 'media_player.sonos_zolderkamer') {
+//			openModal(() => import('$lib/Popups/Sonos_zolderkamer.svelte'), { sel: sel });
+//		} else if (sel?.entity_id === 'media_player.mass_zolderkamer') {
+//			openModal(() => import('$lib/Popups/Media_player.svelte'), { sel: sel });
+//		} else if (sel?.entity_id === 'sensor.udm_se_info') {
+//			openModal(() => import('$lib/Popups/Ubiquiti.svelte'), { sel: sel });
 		} else if (sel?.entity_id === 'binary_sensor.voordeur_contact') {
 			openModal(() => import('$lib/Popups/Deuren.svelte'), { sel: sel });
-		} else if (sel?.entity_id === 'binary_sensor.node_proxmox_status') {
-			openModal(() => import('$lib/Popups/Proxmox.svelte'), { sel: sel });
-		} else if (sel?.entity_id === 'sensor.zolderkamer_humidity') {
-			openModal(() => import('$lib/Popups/Klimaat_zolderkamer.svelte'), { sel: sel });
-		} else if (sel?.entity_id === 'media_player.zolderkamer_google_tv_2') {
-			openModal(() => import('$lib/Popups/Google_tv.svelte'), { sel: sel });
+//		} else if (sel?.entity_id === 'binary_sensor.node_proxmox_status') {
+//			openModal(() => import('$lib/Popups/Proxmox.svelte'), { sel: sel });
+//		} else if (sel?.entity_id === 'sensor.zolderkamer_humidity') {
+//			openModal(() => import('$lib/Popups/Klimaat_zolderkamer.svelte'), { sel: sel });
+//		} else if (sel?.entity_id === 'media_player.zolderkamer_google_tv_2') {
+//			openModal(() => import('$lib/Popups/Google_tv.svelte'), { sel: sel });
 		} else {
 			switch (getDomain(sel?.entity_id)) {
 				// light

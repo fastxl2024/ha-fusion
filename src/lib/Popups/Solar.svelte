@@ -6,11 +6,13 @@
 	import { getName } from '$lib/Utils';
 	import Bar from '$lib/Sidebar/Bar.svelte';
 	import Graph from '$lib/Sidebar/Graph.svelte';
+	import ProgressBar from '$lib/Own_addons/ProgressBar.svelte';
 
 	export let isOpen: boolean;
 	export let sel: any;
-
+	export let progressValue: any;
 	$: entity = $states[sel?.entity_id];
+	$: state = $states.entity?.state
 </script>
 
 {#if isOpen}
@@ -28,7 +30,9 @@
 		Vandaag: <StateLogic entity_id="sensor.solaredge_energy_today" /> <br /><br />
 		Deze maand: <StateLogic entity_id="sensor.solaredge_energy_this_month" /> <br /><br />
 		Dit jaar: <StateLogic entity_id="sensor.solaredge_energy_this_year" /> <br /><br />
-		Aantal bomen geplant: <StateLogic entity_id="sensor.solaradge_bomen_geplant" />
-		<Graph entity_id="sensor.nintendo_switch_power" , period="day" />
+		Aantal bomen geplant: <StateLogic entity_id="sensor.solaradge_bomen_geplant" /><br /><br />
+
+		<ProgressBar value={$states['sensor.udm_se_cpu_temperature'].state} name={$states['sensor.udm_se_cpu_temperature'].attributes.friendly_name} />
 	</Modal>
 {/if}
+  

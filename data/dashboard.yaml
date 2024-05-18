@@ -443,7 +443,7 @@ views:
                 name: Spotje
               - type: button
                 id: 6465024919507
-                entity_id: fan.preset_mode_fan
+                entity_id: fan.mechanical_ventilation
                 name: Afzuiging
             id: 4678980917971
             sections: []
@@ -544,8 +544,9 @@ views:
             items:
               - type: button
                 id: 7940461697945
-                entity_id: light.zolderkamer
+                entity_id: light.zolder_voorruimte_zolder_voorruimte
                 name: Lamp
+                more_info: false
             id: 2043698998800
             sections: []
         id: 8713694617578
@@ -797,14 +798,14 @@ views:
                 entity_id: switch.monitoren
                 name: Monitoren
                 icon: carbon:screen
+                more_info: false
                 template:
                   state: |-
                     {% if is_state(entity_id, 'on') -%}
-                     Aan - {{ states('sensor.lg_monitor_groot_power') | float(0) | round(0) + states('sensor.lg_monitor_groot_power') | float(0) | round(0) }}  W
+                     Aan - {{ states('sensor.lg_monitor_groot_power') | float(0) | round(0) + states('sensor.monitor_links_power') | float(0) | round(0) }}  W
                     {%- else -%}
                      Uit
                     {%- endif -%}
-                more_info: false
               - id: 1394544171955
                 type: button
                 entity_id: switch.docking_station

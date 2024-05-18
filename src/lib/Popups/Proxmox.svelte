@@ -6,7 +6,6 @@
 	import { getName } from '$lib/Utils';
 	import Bar from '$lib/Sidebar/Bar.svelte';
 	import Proxmox_logo from '$lib/Images/Proxmox_logo.png';
-	import { useLocation } from "svelte-routing"
 
 	import { ImageSource } from 'maplibre-gl';
 	import Sensor from '$lib/Sidebar/Sensor.svelte';
@@ -38,6 +37,10 @@
 					<Bar entity_id="sensor.node_proxmox_cpu_used" />
 					<Bar entity_id="sensor.node_proxmox_memory_used_percentage" />
 					<StateLogic entity_id="sensor.disk_proxmox_dev_nvme0n1_temperature" />
+					<div class="circle">
+						<div class="fill"></div>
+						<div class="text">{percentage}%</div>
+					</div>
 				</SwipeItem>
 				<SwipeItem></SwipeItem>
 			</Swipe>
@@ -70,20 +73,6 @@
 				'Port1 Port2 Port3 Port4'
 				'Port5 Port6 Port7 Port8';
 		}
-		.Status {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-template-rows: auto 1fr 1fr 1fr 1fr 1fr 1fr;
-			gap: 2px 0px;
-			grid-template-areas:
-				'Title_name Title_name Title_name_Value'
-				'Uptime Uptime Uptime_Value'
-				'Version Version Version_Value'
-				'CPU CPU CPU_Value'
-				'RAM RAM RAM_Value'
-				'Speedtest Speedtest Speedtest_Value';
-			grid-area: Status;
-		}
 	}
 	@media (min-width: 600px) {
 		.port_container {
@@ -98,4 +87,5 @@
 				'Port1 Port2 Port3 Port4 Port5 Port6 Port7 Port8';
 		}
 	}
+
 </style>
